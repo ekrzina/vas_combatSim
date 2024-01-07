@@ -1,0 +1,167 @@
+WIZARD
+ATTACK:
+	- ember (1 SPATK, single, fire)
+	- lightning (1 SPATK, single, thunder)
+	- snowball (1 ATK, single, ice)
+	- icy wind (1 SPATK, single, ice)
+	- fireball (10 SPATK, everyone, fire)
+	- avalanche (8 SPATK, everyone, ice)
+	- zap (NUMB effect, single, effect)
+	- miasma (3 SPATK, single, poison)
+	- firewall (4 SPATK, everyone, fire)
+	- thunderpunch (3 ATK, single, thunder)
+	- thoron (7 SPATK, single, thunder)
+	- poison touch (POISON effect, single, status)
+	- heal (+10 HP, single, heal)
+HP POOL:
+	- [4,5,6,7,8,9,10]
+ATK POOL:
+	- [1,2,3]
+DEF POOL: 
+	- [1,2,3]
+SPATK POOL:
+	- [5,6,7,8,9,10,11,12,13,14]
+SPDEF POOL: 
+	- [3,4,5,6,7,8,9]
+
+
+CLERIC
+ATTACK:
+	- heal (+10 HP, single, heal)
+	- restore (RESTORE effect, single, status)
+	- rally ATK (+2 ATK, everyone, status)
+	- rally SPATK (+2 SPATK, everyone, status)
+	- rally DEF (+2 DEF, everyone, status)
+	- rally SPDEF (+2 SPDEF, everyone, status)
+	- heal pulse (+5 HP, everyone, heal)
+	- heal blast (+15 HP, single, heal)
+	- healing bell (+3 HP, everyone, heal)
+	- ultimate health (+99 HP, everyone, heal)
+	- bandaid (+2 HP, single, heal)
+HP POOL:
+	- [6,7,8,9,10,11,12]
+ATK POOL:
+	- [1,2]
+DEF POOL: 
+	- [1,2]
+SPATK POOL:
+	- [3,4,5,6]
+SPDEF POOL: 
+	- [5,6,7,8,9,10,11,12,13,14]
+
+
+BARBARIAN
+ATTACK:
+	- slap (1 ATK, single, melee)
+	- punch (4 ATK, single, melee)
+	- kick (5 ATK, single, melee)
+	- throw (5 ATK, single, ranged)
+	- scream (NUMB effect, single, status)
+	- body slam (10 ATK, single, melee)
+HP POOL:
+	- [11,12,13,14,15,16,17,18,19,20,21]
+ATK POOL:
+	- [9,10,11,12,13]
+DEF POOL: 
+	- [6,7,8,9,10]
+SPATK POOL:
+	- [1,2]
+SPDEF POOL: 
+	- [3,4]
+
+
+RANGER
+ATTACK:
+	- slap (1 ATK, single, melee)
+	- punch (4 ATK, single, melee)
+	- shoot bow (2 ATK, single, ranged)
+	- bow storm (10 ATK, everyone, ranged)
+	- disarm (NUMB effect, single, status)
+HP POOL:
+	- [8,9,10,11,12,13,14,15]
+ATK POOL:
+	- [5,6,7,8]
+DEF POOL: 
+	- [3,4,5,6]
+SPATK POOL:
+	- [1,2]
+SPDEF POOL: 
+	- [3,4,5,6,7,8,9,10,11,12]
+
+BARD
+ATTACK:
+	- charm (NUMB effect, single, status)
+	- bard dance (LURE effect, single, status)
+	- slap (1 ATK, single, melee)
+	- heal (+10 HP, single, heal)
+	- double slap (2 ATK, two, melee)
+	- icy wind (1 SPATK, single, ice)
+	- ember (1 SPATK, single, fire)
+	- snowball (1 ATK, single, ice)
+	- rally ATK (+2 ATK, everyone, status)
+	- rally SPATK (+2 SPATK, everyone, status)
+	- rally DEF (+2 DEF, everyone, status)
+	- rally SPDEF (+2 SPDEF, everyone, status)
+HP POOL:
+	- [4,5,6,7,8,9,10,11]
+ATK POOL:
+	- [3,4,5]
+DEF POOL: 
+	- [2,3,4,5]
+SPATK POOL:
+	- [6,7,8,9]
+SPDEF POOL: 
+	- [4,5,6,7,8,9,10]
+
+MASCAT
+ATTACK:
+	- charm (NUMB effect, single, status)
+	- bard dance (LURE effect, single, status)
+	- slap (1 ATK, single, melee)
+	- heal (+10 HP, single, heal)
+	- double slap (2 ATK, two, melee)
+	- icy wind (1 SPATK, single, ice)
+	- ember (1 SPATK, single, fire)
+	- snowball (1 ATK, single, ice)
+	- rally ATK (+2 ATK, everyone, status)
+	- rally SPATK (+2 SPATK, everyone, status)
+	- rally DEF (+2 DEF, everyone, status)
+	- rally SPDEF (+2 SPDEF, everyone, status)
+	- punch (4 ATK, single, melee)
+	- kick (5 ATK, single, melee)
+	- throw (5 ATK, single, ranged)
+	- scream (NUMB effect, single, status)
+	- body slam (10 ATK, single, melee)
+	- ember (1 SPATK, single, fire)
+	- lightning (1 SPATK, single, thunder)
+	- snowball (1 ATK, single, ice)
+	- icy wind (1 SPATK, single, ice)
+	- fireball (10 SPATK, everyone, fire)
+	- avalanche (8 SPATK, everyone, ice)
+	- zap (NUMB effect, single, effect)
+	- miasma (3 SPATK, single, poison)
+	- firewall (5 SPATK, everyone, fire)
+	- thunderpunch (5 ATK, single, thunder)
+	- thoron (7 SPATK, single, thunder)
+	- poison touch (POISON effect, single, status)
+	- shoot bow (2 ATK, single, ranged)
+	- bow storm (10 ATK, everyone, ranged)
+	- disarm (NUMB effect, single, status)	
+	- heal pulse (+5 HP, everyone, heal)
+	- heal blast (+15 HP, single, heal)
+	- healing bell (+3 HP, everyone, heal)
+	- ultimate health (+99 HP, everyone, heal)
+	- bandaid (+2 HP, single, heal)
+	- restore (RESTORE effect, single, status)
+HP POOL:
+	- [3,4,5,6,7,8,9]
+ATK POOL:
+	- [1,2,3,4,5,6,7,8,9,10]
+DEF POOL: 
+	- [1,2,3,4,5,6,7,8,9,10]
+SPATK POOL:
+	- [1,2,3,4,5,6,7,8,9,10]
+SPDEF POOL: 
+	- [1,2,3,4,5,6,7,8,9,10]
+
+	

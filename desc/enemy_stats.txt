@@ -1,0 +1,157 @@
+DRAGON
+ATTACKS:
+	- tail slap (8 ATK, single, melee)
+	- smash (13 ATK, single, melee)
+	- breathe fire (16 SPATK, everyone, fire)
+	- roar (NUMB effect, everyone, status)
+	- bite (5 ATK, single, melee)
+	- smog (BLIND effect, everyone, status)
+WEAKNESS:
+	- ranged
+STRENGTH:
+	- melee
+	- ice
+	- thunder
+IMMUNE: 
+	- fire
+HP:
+	- 60
+ATK:
+	- 10
+DEF:
+	- 10
+SPATK:
+	- 10
+SPDEF:
+	- 10
+
+GHOST
+ATTACKS:
+	- cry (NUMB effect, one, status)
+	- touch (2 ATK, one, melee)
+	- look sad (none)
+	- wail (NUMB effect, everyone, status)
+
+WEAKNESS: 
+	- none
+STRENGTH:
+	- none
+IMMUNE:
+	- melee
+HP:
+	- 10
+ATK:
+	- 1
+DEF:
+	- 100
+SPATK:
+	- 1
+SPDEF:
+	- 0
+
+SHROOM
+ATTACKS:
+	- smog (BLIND effect, everyone, status)
+	- spore (3 SPATK, everyone, poison)
+	- whip (4 ATK, single, melee)
+	- dominate (CONFUSE effect, single, status)
+	- quake (2 ATK, everyone, melee)
+
+WEAKNESS: 
+	- fire
+STRENGTH:
+	- none
+IMMUNE:
+	- poison
+HP:
+	- 12
+ATK:
+	- 2
+DEF:
+	- 4
+SPATK:
+	- 3
+SPDEF:
+	- 5
+
+
+ROCK-CRAB
+ATTACKS:
+	- vicegrip (4 ATK, single, melee)
+	- quake (2 ATK, everyone, melee)
+	- throw rock (1 ATK, single, melee)
+
+WEAKNESS:
+	- none
+STRENGTH:
+	- melee
+IMMUNE: 
+	- none
+
+ICE-CRAB
+ATTACKS:
+	- vicegrip (4 ATK, single, melee)
+	- quake (2 ATK, everyone, melee)
+	- throw rock (1 ATK, single, melee)
+
+WEAKNESS:
+	- fire
+STRENGTH:
+	- melee
+IMMUNE: 
+	- ice
+HP:
+	- 5
+ATK:
+	- 5
+DEF:
+	- 1
+SPATK:
+	- 1
+SPDEF:
+	- 1
+FIRE-CRAB
+ATTACKS:
+	- vicegrip (4 ATK, single, melee)
+	- quake (2 ATK, everyone, melee)
+	- throw rock (1 ATK, single, melee)
+
+WEAKNESS:
+	- ice
+STRENGTH:
+	- melee
+IMMUNE: 
+	- fire
+HP:
+	- 5
+ATK:
+	- 1
+DEF:
+	- 1
+SPATK:
+	- 1
+SPDEF:
+	- 1
+
+UNDYNE
+ATTACKS:
+	- sing (CONFUSE effect, everyone, status)
+	- slap (3 ATK, single, melee)
+	- water splash (3 SPATK, single, ice)
+	- drown (8 SPATK, everyone, ice)
+WEAKNESS:
+	- thunder
+STRENGTH:
+	- ice
+IMMUNE:
+	- none
+HP:
+	- 25
+ATK:
+	- 2
+DEF:
+	- 6
+SPATK:
+	- 6
+SPDEF:
+	- 2

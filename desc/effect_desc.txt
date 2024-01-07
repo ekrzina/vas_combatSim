@@ -1,0 +1,15 @@
+STATUS:
+	- NUMB: can't move for one turn
+	- BLIND: reduces chance to hit enemy by 50% for one turn
+	- CONFUSE: agent assumes another behavior for 3 turns, but keeps same equipment and spells
+	- LURE: makes enemies target agent
+	- POISON: targets loses 1 HP every turn
+	- RESTORE: heals all status effects
+
+TYPES:
+	- fire
+	- thunder
+	- ice
+	- melee
+	- ranged
+	- poison
