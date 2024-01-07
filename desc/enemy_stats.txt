@@ -155,3 +155,30 @@ SPATK:
 	- 6
 SPDEF:
 	- 2
+
+LITTLEDEVIL
+ATTACKS:
+	- smog (BLIND effect, everyone, status)
+	- dominate (CONFUSE effect, single, status)
+	- spikes (10 ATK, everyone, ranged)
+	- thorn (3 ATK, single, ranged)
+	- scratch (2 ATK, single, ranged)
+	- laugh (POISON effect, everyone, status)
+	- thunderpunch (3 ATK, single, melee)
+
+WEAKNESS: 
+	- none
+STRENGTH:
+	- none
+IMMUNE:
+	- poison
+HP:
+	- 15
+ATK:
+	- 4
+DEF:
+	- 4
+SPATK:
+	- 4
+SPDEF:
+	- 3
