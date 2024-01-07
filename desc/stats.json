@@ -1,0 +1,899 @@
+{
+  "statuses": {
+    "NUMB": "can't move for one turn",
+    "BLIND": "reduces chance to hit enemy by 50% for one turn",
+    "CONFUSE": "agent assumes another behavior for 3 turns, but keeps same equipment and spells",
+    "LURE": "makes enemies target agent",
+    "POISON": "targets lose 1 HP every turn",
+    "RESTORE": "heals all status effects"
+  },
+  "types": [ "fire", "thunder", "ice", "melee", "ranged", "poison" ],
+  "enemies": {
+    "DRAGON": {
+      "attacks": [
+        {
+          "name": "tail slap",
+          "atk": 8,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "smash",
+          "atk": 13,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "breathe fire",
+          "atk": 16,
+          "target": "everyone",
+          "type": "fire"
+        },
+        {
+          "name": "roar",
+          "effect": "NUMB",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "bite",
+          "atk": 5,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "smog",
+          "effect": "BLIND",
+          "target": "everyone",
+          "type": "status"
+        }
+      ],
+      "weakness": [ "ranged" ],
+      "strength": [ "melee", "ice", "thunder" ],
+      "immune": [ "fire" ],
+      "attributes": {
+        "HP": 60,
+        "ATK": 10,
+        "DEF": 10,
+        "SPATK": 10,
+        "SPDEF": 10
+      }
+    },
+    "GHOST": {
+      "attacks": [
+        {
+          "name": "cry",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "touch",
+          "atk": 2,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "look sad",
+          "type": "none"
+        },
+        {
+          "name": "wail",
+          "effect": "NUMB",
+          "target": "everyone",
+          "type": "status"
+        }
+      ],
+      "weakness": [ "none" ],
+      "strength": [ "none" ],
+      "immune": [ "melee" ],
+      "attributes": {
+        "HP": 10,
+        "ATK": 1,
+        "DEF": 100,
+        "SPATK": 1,
+        "SPDEF": 0
+      }
+    },
+    "SHROOM": {
+      "attacks": [
+        {
+          "name": "smog",
+          "effect": "BLIND",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "spore",
+          "atk": 3,
+          "target": "everyone",
+          "type": "poison"
+        },
+        {
+          "name": "whip",
+          "atk": 4,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "dominate",
+          "effect": "CONFUSE",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "quake",
+          "atk": 2,
+          "target": "everyone",
+          "type": "melee"
+        }
+      ],
+      "weakness": [ "fire" ],
+      "strength": [],
+      "immune": [ "poison" ],
+      "attributes": {
+        "HP": 12,
+        "ATK": 2,
+        "DEF": 4,
+        "SPATK": 3,
+        "SPDEF": 5
+      }
+    },
+    "ROCK-CRAB": {
+      "attacks": [
+        {
+          "name": "vicegrip",
+          "atk": 4,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "quake",
+          "atk": 2,
+          "target": "everyone",
+          "type": "melee"
+        },
+        {
+          "name": "throw rock",
+          "atk": 1,
+          "target": "single",
+          "type": "melee"
+        }
+      ],
+      "weakness": [ "none" ],
+      "strength": [ "melee" ],
+      "immune": [ "none" ],
+      "attributes": {
+        "HP": 10,
+        "ATK": 5,
+        "DEF": 1,
+        "SPATK": 1,
+        "SPDEF": 1
+      }
+    },
+    "ICE-CRAB": {
+      "attacks": [
+        {
+          "name": "vicegrip",
+          "atk": 4,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "quake",
+          "atk": 2,
+          "target": "everyone",
+          "type": "melee"
+        },
+        {
+          "name": "throw rock",
+          "atk": 1,
+          "target": "single",
+          "type": "melee"
+        }
+      ],
+      "weakness": [ "fire" ],
+      "strength": [ "melee" ],
+      "immune": [ "ice" ],
+      "attributes": {
+        "HP": 5,
+        "ATK": 5,
+        "DEF": 1,
+        "SPATK": 1,
+        "SPDEF": 1
+      }
+    },
+    "FIRE-CRAB": {
+      "attacks": [
+        {
+          "name": "vicegrip",
+          "atk": 4,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "quake",
+          "atk": 2,
+          "target": "everyone",
+          "type": "melee"
+        },
+        {
+          "name": "throw rock",
+          "atk": 1,
+          "target": "single",
+          "type": "melee"
+        }
+      ],
+      "weakness": [ "ice" ],
+      "strength": [ "melee" ],
+      "immune": [ "fire" ],
+      "attributes": {
+        "HP": 5,
+        "ATK": 1,
+        "DEF": 1,
+        "SPATK": 1,
+        "SPDEF": 1
+      }
+    },
+    "UNDYNE": {
+      "attacks": [
+        {
+          "name": "sing",
+          "effect": "CONFUSE",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "slap",
+          "atk": 3,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "water splash",
+          "atk": 3,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "drown",
+          "atk": 8,
+          "target": "everyone",
+          "type": "ice"
+        }
+      ],
+      "weakness": [ "thunder" ],
+      "strength": [ "ice" ],
+      "immune": [ "none" ],
+      "attributes": {
+        "HP": 25,
+        "ATK": 2,
+        "DEF": 6,
+        "SPATK": 6,
+        "SPDEF": 2
+      }
+    },
+    "LITTLEDEVIL": {
+      "attacks": [
+        {
+          "name": "smog",
+          "effect": "BLIND",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "dominate",
+          "effect": "CONFUSE",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "spikes",
+          "atk": 10,
+          "target": "everyone",
+          "type": "ranged"
+        },
+        {
+          "name": "thorn",
+          "atk": 3,
+          "target": "single",
+          "type": "ranged"
+        },
+        {
+          "name": "scratch",
+          "atk": 2,
+          "target": "single",
+          "type": "ranged"
+        },
+        {
+          "name": "laugh",
+          "effect": "POISON",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "thunderpunch",
+          "atk": 3,
+          "target": "single",
+          "type": "melee"
+        }
+      ],
+      "weakness": [ "none" ],
+      "strength": [ "none" ],
+      "immune": [ "poison" ],
+      "attributes": {
+        "HP": 15,
+        "ATK": 4,
+        "DEF": 4,
+        "SPATK": 4,
+        "SPDEF": 3
+      }
+    },
+  },
+  "heroes": {
+    "WIZARD": {
+      "attacks": [
+        {
+          "name": "ember",
+          "spatk": 1,
+          "target": "single",
+          "type": "fire"
+        },
+        {
+          "name": "lightning",
+          "spatk": 1,
+          "target": "single",
+          "type": "thunder"
+        },
+        {
+          "name": "snowball",
+          "atk": 1,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "icy wind",
+          "spatk": 1,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "fireball",
+          "spatk": 10,
+          "target": "everyone",
+          "type": "fire"
+        },
+        {
+          "name": "avalanche",
+          "spatk": 8,
+          "target": "everyone",
+          "type": "ice"
+        },
+        {
+          "name": "zap",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "miasma",
+          "spatk": 3,
+          "target": "single",
+          "type": "poison"
+        },
+        {
+          "name": "firewall",
+          "spatk": 4,
+          "target": "everyone",
+          "type": "fire"
+        },
+        {
+          "name": "thunderpunch",
+          "atk": 3,
+          "target": "single",
+          "type": "thunder"
+        },
+        {
+          "name": "thoron",
+          "spatk": 7,
+          "target": "single",
+          "type": "thunder"
+        },
+        {
+          "name": "poison touch",
+          "effect": "POISON",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "heal",
+          "hp": 10,
+          "target": "single",
+          "type": "heal"
+        }
+      ],
+      "hp_pool": [ 4, 5, 6, 7, 8, 9, 10 ],
+      "atk_pool": [ 1, 2, 3 ],
+      "def_pool": [ 1, 2, 3 ],
+      "spatk_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
+      "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9 ]
+    },
+    "CLERIC": {
+      "attacks": [
+        {
+          "name": "heal",
+          "hp": 10,
+          "target": "single",
+          "type": "heal"
+        },
+        {
+          "name": "restore",
+          "effect": "RESTORE",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "rally ATK",
+          "effect": "rally ATK",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally SPATK",
+          "effect": "rally SPATK",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally DEF",
+          "effect": "rally DEF",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally SPDEF",
+          "effect": "rally SPDEF",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "heal pulse",
+          "hp": 5,
+          "target": "everyone",
+          "type": "heal"
+        },
+        {
+          "name": "heal blast",
+          "hp": 15,
+          "target": "single",
+          "type": "heal"
+        },
+        {
+          "name": "healing bell",
+          "hp": 3,
+          "target": "everyone",
+          "type": "heal"
+        },
+        {
+          "name": "ultimate health",
+          "hp": 99,
+          "target": "everyone",
+          "type": "heal"
+        },
+        {
+          "name": "bandaid",
+          "hp": 2,
+          "target": "single",
+          "type": "heal"
+        }
+      ],
+      "hp_pool": [ 6, 7, 8, 9, 10, 11, 12 ],
+      "atk_pool": [ 1, 2 ],
+      "def_pool": [ 1, 2 ],
+      "spatk_pool": [ 3, 4, 5, 6 ],
+      "spdef_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+    },
+    "BARBARIAN": {
+      "attacks": [
+        {
+          "name": "slap",
+          "atk": 1,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "punch",
+          "atk": 4,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "kick",
+          "atk": 5,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "throw",
+          "atk": 5,
+          "target": "single",
+          "type": "ranged"
+        },
+        {
+          "name": "scream",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "body slam",
+          "atk": 10,
+          "target": "single",
+          "type": "melee"
+        }
+      ],
+      "hp_pool": [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ],
+      "atk_pool": [ 9, 10, 11, 12, 13 ],
+      "def_pool": [ 6, 7, 8, 9, 10 ],
+      "spatk_pool": [ 1, 2 ],
+      "spdef_pool": [ 3, 4 ]
+    },
+    "RANGER": {
+      "attacks": [
+        {
+          "name": "slap",
+          "atk": 1,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "punch",
+          "atk": 4,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "shoot bow",
+          "atk": 2,
+          "target": "single",
+          "type": "ranged"
+        },
+        {
+          "name": "bow storm",
+          "atk": 10,
+          "target": "everyone",
+          "type": "ranged"
+        },
+        {
+          "name": "disarm",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        }
+      ],
+      "hp_pool": [ 8, 9, 10, 11, 12, 13, 14, 15 ],
+      "atk_pool": [ 5, 6, 7, 8 ],
+      "def_pool": [ 3, 4, 5, 6 ],
+      "spatk_pool": [ 1, 2 ],
+      "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
+    },
+    "BARD": {
+      "attacks": [
+        {
+          "name": "charm",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "bard dance",
+          "effect": "LURE",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "slap",
+          "atk": 1,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "heal",
+          "hp": 10,
+          "target": "single",
+          "type": "heal"
+        },
+        {
+          "name": "double slap",
+          "atk": 2,
+          "target": "two",
+          "type": "melee"
+        },
+        {
+          "name": "icy wind",
+          "spatk": 1,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "ember",
+          "spatk": 1,
+          "target": "single",
+          "type": "fire"
+        },
+        {
+          "name": "snowball",
+          "atk": 1,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "rally ATK",
+          "effect": "rally ATK",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally SPATK",
+          "effect": "rally SPATK",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally DEF",
+          "effect": "rally DEF",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally SPDEF",
+          "effect": "rally SPDEF",
+          "target": "everyone",
+          "type": "status"
+        }
+      ],
+      "hp_pool": [ 4, 5, 6, 7, 8, 9, 10, 11 ],
+      "atk_pool": [ 3, 4, 5 ],
+      "def_pool": [ 2, 3, 4, 5 ],
+      "spatk_pool": [ 6, 7, 8, 9 ],
+      "spdef_pool": [ 4, 5, 6, 7, 8, 9, 10 ]
+    },
+    "MASCAT": {
+      "attacks": [
+        {
+          "name": "charm",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "bard dance",
+          "effect": "LURE",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "slap",
+          "atk": 1,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "heal",
+          "hp": 10,
+          "target": "single",
+          "type": "heal"
+        },
+        {
+          "name": "double slap",
+          "atk": 2,
+          "target": "two",
+          "type": "melee"
+        },
+        {
+          "name": "icy wind",
+          "spatk": 1,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "ember",
+          "spatk": 1,
+          "target": "single",
+          "type": "fire"
+        },
+        {
+          "name": "snowball",
+          "atk": 1,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "rally ATK",
+          "effect": "rally ATK",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally SPATK",
+          "effect": "rally SPATK",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally DEF",
+          "effect": "rally DEF",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "rally SPDEF",
+          "effect": "rally SPDEF",
+          "target": "everyone",
+          "type": "status"
+        },
+        {
+          "name": "punch",
+          "atk": 4,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "kick",
+          "atk": 5,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "throw",
+          "atk": 5,
+          "target": "single",
+          "type": "ranged"
+        },
+        {
+          "name": "scream",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "body slam",
+          "atk": 10,
+          "target": "single",
+          "type": "melee"
+        },
+        {
+          "name": "ember",
+          "spatk": 1,
+          "target": "single",
+          "type": "fire"
+        },
+        {
+          "name": "lightning",
+          "spatk": 1,
+          "target": "single",
+          "type": "thunder"
+        },
+        {
+          "name": "snowball",
+          "atk": 1,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "icy wind",
+          "spatk": 1,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "fireball",
+          "spatk": 10,
+          "target": "everyone",
+          "type": "fire"
+        },
+        {
+          "name": "avalanche",
+          "spatk": 8,
+          "target": "everyone",
+          "type": "ice"
+        },
+        {
+          "name": "zap",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "miasma",
+          "spatk": 3,
+          "target": "single",
+          "type": "poison"
+        },
+        {
+          "name": "firewall",
+          "spatk": 5,
+          "target": "everyone",
+          "type": "fire"
+        },
+        {
+          "name": "thunderpunch",
+          "atk": 5,
+          "target": "single",
+          "type": "thunder"
+        },
+        {
+          "name": "thoron",
+          "spatk": 7,
+          "target": "single",
+          "type": "thunder"
+        },
+        {
+          "name": "poison touch",
+          "effect": "POISON",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "shoot bow",
+          "atk": 2,
+          "target": "single",
+          "type": "ranged"
+        },
+        {
+          "name": "bow storm",
+          "atk": 10,
+          "target": "everyone",
+          "type": "ranged"
+        },
+        {
+          "name": "disarm",
+          "effect": "NUMB",
+          "target": "single",
+          "type": "status"
+        },
+        {
+          "name": "heal pulse",
+          "hp": 5,
+          "target": "everyone",
+          "type": "heal"
+        },
+        {
+          "name": "heal blast",
+          "hp": 15,
+          "target": "single",
+          "type": "heal"
+        },
+        {
+          "name": "healing bell",
+          "hp": 3,
+          "target": "everyone",
+          "type": "heal"
+        },
+        {
+          "name": "ultimate health",
+          "hp": 99,
+          "target": "everyone",
+          "type": "heal"
+        },
+        {
+          "name": "bandaid",
+          "hp": 2,
+          "target": "single",
+          "type": "heal"
+        },
+        {
+          "name": "restore",
+          "effect": "RESTORE",
+          "target": "single",
+          "type": "status"
+        }
+      ],
+      "hp_pool": [ 3, 4, 5, 6, 7, 8, 9 ],
+      "atk_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+      "def_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+      "spatk_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+      "spdef_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+    }
+  }
+}
