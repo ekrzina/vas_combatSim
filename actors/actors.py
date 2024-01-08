@@ -31,7 +31,7 @@ class AbstractActor(ABC):
                 img = Image.open(img_path)
                 img = img.convert("RGBA")
 
-                target_size = (500, 420)
+                target_size = (450, 420)
                 img = img.resize(target_size)
 
                 img_data = img.tobytes()
@@ -195,7 +195,46 @@ class Hero(AbstractActor):
         return super().get_stats_string()
 
     def show_picture(self):
-        return super().show_picture()
+        if self.pct:
+            try:
+                img_path = os.path.join(os.path.dirname(__file__), self.pct)
+                img = Image.open(img_path)
+                img = img.convert("RGBA")
+
+                target_size = (400, 450)
+                img = img.resize(target_size)
+
+                img_data = img.tobytes()
+
+                pygame.init()
+                screen = pygame.display.set_mode(target_size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+                pygame.display.set_caption("Agent Picture")
+
+                img_surface = pygame.image.fromstring(img_data, target_size, "RGBA")
+                
+                font = pygame.font.Font(None, 24)
+                text_name = font.render(f"Name: {self.name}", True, (0, 0, 0))                
+                text_name_rect = text_name.get_rect(center=(target_size[0] // 2, target_size[1] - 20))  # Adjust Y-coordinate
+
+                clock = pygame.time.Clock()
+
+                running = True
+                while running:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            running = False
+
+                    screen.fill((255, 255, 255))
+                    screen.blit(img_surface, (0, 0))
+                    screen.blit(text_name, text_name_rect)
+
+                    pygame.display.flip()
+                    clock.tick(0)
+
+                pygame.quit()
+
+            except Exception as e:
+                print(f"Error displaying picture: {e}")
 
     def printStats(self):
         return super().printStats()

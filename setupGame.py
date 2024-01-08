@@ -78,8 +78,7 @@ def fetch_random_enemy():
 
     return fetch_enemy_entity(random_enemy_data)
 
-if __name__ == "__main__":
-
+def setupGame():
     new_enemy = fetch_random_enemy()
     new_enemy.show_picture()
     new_enemy.show_description()
@@ -87,3 +86,5 @@ if __name__ == "__main__":
     new_hero = fetch_random_hero()
     new_hero.show_picture()
     new_hero.show_description()
+
+    return new_enemy, new_hero
