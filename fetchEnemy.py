@@ -21,11 +21,12 @@ def fetch_random_enemy():
         weakness=random_enemy_data['weakness'],
         strength=random_enemy_data['strength'] if 'strength' in random_enemy_data else None,
         immune=random_enemy_data['immune'] if 'immune' in random_enemy_data else None,
-        pct=random_enemy_data.get('pct', None)
+        pct=random_enemy_data['pct']
     )
     return random_enemy
 
 if __name__ == "__main__":
 
     new_enemy = fetch_random_enemy()
-    new_enemy.printStats()
+    new_enemy.show_picture()
+    new_enemy.show_description()
