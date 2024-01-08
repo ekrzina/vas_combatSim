@@ -38,7 +38,7 @@ class AbstractActor(ABC):
 
                 pygame.init()
                 screen = pygame.display.set_mode(target_size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-                pygame.display.set_caption("Enemy Picture")
+                pygame.display.set_caption("Agent Picture")
 
                 img_surface = pygame.image.fromstring(img_data, target_size, "RGBA")
                
@@ -186,24 +186,36 @@ class Hero(AbstractActor):
         # add behaviour
 
     def perform_attack(self, target):
-        # Implement the logic for performing an attack on the target
         pass
 
     def take_damage(self, damage):
-        # Implement the logic for taking damage
         pass
     
     def get_stats_string(self):
         return super().get_stats_string()
 
-    def show_picture(self, pict):
-        return super().show_picture(pict)
+    def show_picture(self):
+        return super().show_picture()
 
     def printStats(self):
         return super().printStats()
     
     def get_stats_string(self):
-        return super().get_stats_string()
+        stats_lines = [
+            f"HP: {self.hp}",
+            f"ATK: {self.atk}",
+            f"DEF: {self.pdef}",
+            f"SPATK: {self.spatk}",
+            f"SPDEF: {self.spdef}",
+            f"Weakness: {self.weakness}"
+        ]
+
+        if self.attack_list:
+            stats_lines.append("Attacks:")
+            for attack in self.attack_list:
+                stats_lines.append(f"  {attack['name']}")
+
+        return stats_lines
 
     def show_description(self):
         return super().show_description()

@@ -359,19 +359,19 @@
         },
         {
           "name": "lightning",
-          "spatk": 1,
+          "spatk": 2,
           "target": "single",
           "type": "thunder"
         },
         {
           "name": "snowball",
-          "atk": 1,
+          "atk": 2,
           "target": "single",
           "type": "ice"
         },
         {
           "name": "icy wind",
-          "spatk": 1,
+          "spatk": 3,
           "target": "single",
           "type": "ice"
         },
@@ -434,7 +434,8 @@
       "atk_pool": [ 1, 2, 3 ],
       "def_pool": [ 1, 2, 3 ],
       "spatk_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
-      "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9 ]
+      "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9 ],
+      "weakness": [ "", "poison", "malee", "ranged" ]
     },
     "CLERIC": {
       "name":"Cleric",
@@ -447,33 +448,27 @@
           "type": "heal"
         },
         {
+          "name": "lightning",
+          "spatk": 2,
+          "target": "single",
+          "type": "thunder"
+        },
+        {
+          "name": "snowball",
+          "atk": 2,
+          "target": "single",
+          "type": "ice"
+        },
+        {
+          "name": "icy wind",
+          "spatk": 3,
+          "target": "single",
+          "type": "ice"
+        },
+        {
           "name": "restore",
           "effect": "RESTORE",
           "target": "single",
-          "type": "status"
-        },
-        {
-          "name": "rally ATK",
-          "effect": "rally ATK",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally SPATK",
-          "effect": "rally SPATK",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally DEF",
-          "effect": "rally DEF",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally SPDEF",
-          "effect": "rally SPDEF",
-          "target": "everyone",
           "type": "status"
         },
         {
@@ -511,7 +506,8 @@
       "atk_pool": [ 1, 2 ],
       "def_pool": [ 1, 2 ],
       "spatk_pool": [ 3, 4, 5, 6 ],
-      "spdef_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+      "spdef_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
+      "weakness": [ "", "thunder", "poison", "malee", "ranged" ]
     },
     "BARBARIAN": {
       "name":"Barbarian",
@@ -555,10 +551,11 @@
         }
       ],
       "hp_pool": [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ],
-      "atk_pool": [ 9, 10, 11, 12, 13 ],
-      "def_pool": [ 6, 7, 8, 9, 10 ],
+      "atk_pool": [ 9, 10, 11, 12, 13, 14 ],
+      "def_pool": [ 6, 7, 8, 9, 10, 11, 12 ],
       "spatk_pool": [ 1, 2 ],
-      "spdef_pool": [ 3, 4 ]
+      "spdef_pool": [ 2, 3 ],
+      "weakness": [ "", "ice", "fire", "thunder", "poison" ]
     },
     "RANGER": {
       "name":"Ranger",
@@ -599,7 +596,8 @@
       "atk_pool": [ 5, 6, 7, 8 ],
       "def_pool": [ 3, 4, 5, 6 ],
       "spatk_pool": [ 1, 2 ],
-      "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
+      "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
+      "weakness": [ "", "ice", "fire", "thunder", "malee", "ranged" ]
     },
     "BARD": {
       "name":"Bard",
@@ -610,6 +608,12 @@
           "effect": "NUMB",
           "target": "single",
           "type": "status"
+        },
+        {
+          "name": "vicious mockery",
+          "spatk": 17,
+          "target": "single",
+          "type": "poison"
         },
         {
           "name": "bard dance",
@@ -652,37 +656,14 @@
           "atk": 1,
           "target": "single",
           "type": "ice"
-        },
-        {
-          "name": "rally ATK",
-          "effect": "rally ATK",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally SPATK",
-          "effect": "rally SPATK",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally DEF",
-          "effect": "rally DEF",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally SPDEF",
-          "effect": "rally SPDEF",
-          "target": "everyone",
-          "type": "status"
         }
       ],
       "hp_pool": [ 4, 5, 6, 7, 8, 9, 10, 11 ],
       "atk_pool": [ 3, 4, 5 ],
       "def_pool": [ 2, 3, 4, 5 ],
       "spatk_pool": [ 6, 7, 8, 9 ],
-      "spdef_pool": [ 4, 5, 6, 7, 8, 9, 10 ]
+      "spdef_pool": [ 4, 5, 6, 7, 8, 9, 10 ],
+      "weakness": [ "", "ice", "fire", "thunder", "poison", "malee" ]
     },
     "MASCAT": {
       "name":"Mascat",
@@ -735,30 +716,6 @@
           "atk": 1,
           "target": "single",
           "type": "ice"
-        },
-        {
-          "name": "rally ATK",
-          "effect": "rally ATK",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally SPATK",
-          "effect": "rally SPATK",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally DEF",
-          "effect": "rally DEF",
-          "target": "everyone",
-          "type": "status"
-        },
-        {
-          "name": "rally SPDEF",
-          "effect": "rally SPDEF",
-          "target": "everyone",
-          "type": "status"
         },
         {
           "name": "punch",
@@ -921,7 +878,8 @@
       "atk_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
       "def_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
       "spatk_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
-      "spdef_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+      "spdef_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+      "weakness": [ "", "ice", "fire", "thunder", "poison", "malee", "ranged" ]
     }
   }
 }
