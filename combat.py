@@ -20,7 +20,8 @@ def choose_attack(attacker):
      # randomly pick attack
      pass
 
-def attack(agent_list):
+# implement from agent perspective with their behaviour
+def let_agents_loose(agent_list):
     global game_over, turns
     for attacker in agent_list:
         # import agent behaviour, based on class they act differently, attack from there
@@ -52,4 +53,4 @@ def startCombat(enemy, hero):
         # start of turn
         turns += 1
         # all attack
-        attack(agent_list)
+        let_agents_loose(agent_list)
