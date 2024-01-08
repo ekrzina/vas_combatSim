@@ -10,6 +10,8 @@
   "types": [ "fire", "thunder", "ice", "melee", "ranged", "poison" ],
   "enemies": {
     "DRAGON": {
+      "name":"Red Dragon",
+      "pct":"../img/dragon.png",
       "attacks": [
         {
           "name": "tail slap",
@@ -60,6 +62,8 @@
       }
     },
     "GHOST": {
+      "name":"Ghostie",
+      "pct":"../img/ghost.png",
       "attacks": [
         {
           "name": "cry",
@@ -96,6 +100,8 @@
       }
     },
     "SHROOM": {
+      "name":"Doom Shroom",
+      "pct":"../img/shroom.png",
       "attacks": [
         {
           "name": "smog",
@@ -140,6 +146,8 @@
       }
     },
     "ROCK-CRAB": {
+      "name":"Rock Crab",
+      "pct":"../img/rockcrab.png",
       "attacks": [
         {
           "name": "vicegrip",
@@ -172,6 +180,8 @@
       }
     },
     "ICE-CRAB": {
+      "name":"Ice Crab",
+      "pct":"../img/icecrab.png",
       "attacks": [
         {
           "name": "vicegrip",
@@ -204,6 +214,8 @@
       }
     },
     "FIRE-CRAB": {
+      "name":"Lava Crab",
+      "pct":"../img/lavacrab.png",
       "attacks": [
         {
           "name": "vicegrip",
@@ -236,6 +248,8 @@
       }
     },
     "UNDYNE": {
+      "name":"Undine",
+      "pct":"../img/undine.png",
       "attacks": [
         {
           "name": "sing",
@@ -274,6 +288,8 @@
       }
     },
     "LITTLEDEVIL": {
+      "name":"Little Devil",
+      "pct":"../img/littledevil.png",
       "attacks": [
         {
           "name": "smog",
@@ -328,10 +344,12 @@
         "SPATK": 4,
         "SPDEF": 3
       }
-    },
+    }
   },
   "heroes": {
     "WIZARD": {
+      "name":"Wizard",
+      "pct":"../img/wizard.png",
       "attacks": [
         {
           "name": "ember",
@@ -419,6 +437,8 @@
       "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9 ]
     },
     "CLERIC": {
+      "name":"Cleric",
+      "pct":"../img/cleric.png",
       "attacks": [
         {
           "name": "heal",
@@ -494,6 +514,8 @@
       "spdef_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
     },
     "BARBARIAN": {
+      "name":"Barbarian",
+      "pct":"../img/barbarian.png",
       "attacks": [
         {
           "name": "slap",
@@ -539,6 +561,8 @@
       "spdef_pool": [ 3, 4 ]
     },
     "RANGER": {
+      "name":"Ranger",
+      "pct":"../img/ranger.png",
       "attacks": [
         {
           "name": "slap",
@@ -578,6 +602,8 @@
       "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
     },
     "BARD": {
+      "name":"Bard",
+      "pct":"../img/bard.png",
       "attacks": [
         {
           "name": "charm",
@@ -659,6 +685,8 @@
       "spdef_pool": [ 4, 5, 6, 7, 8, 9, 10 ]
     },
     "MASCAT": {
+      "name":"Mascat",
+      "pct":"../img/mascat.png",
       "attacks": [
         {
           "name": "charm",
