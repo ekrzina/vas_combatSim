@@ -5,9 +5,9 @@
     "CONFUSE": "agent assumes another behavior for 3 turns, but keeps same equipment and spells",
     "LURE": "makes enemies target agent",
     "POISON": "targets lose 1 HP every turn",
-    "RESTORE": "heals all status effects"
+    "RESTORE": "heals all status dmgs"
   },
-  "types": [ "fire", "thunder", "ice", "melee", "ranged", "poison" ],
+  "elements": [ "fire", "thunder", "ice", "melee", "ranged", "poison" ],
   "enemies": {
     "DRAGON": {
       "name":"Red Dragon",
@@ -15,38 +15,44 @@
       "attacks": [
         {
           "name": "tail slap",
-          "atk": 8,
+          "dmg": 8,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "smash",
-          "atk": 13,
+          "dmg": 13,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "breathe fire",
-          "atk": 16,
+          "dmg": 16,
           "target": "everyone",
-          "type": "fire"
+          "element": "fire",
+          "type": "spatk"
         },
         {
           "name": "roar",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "everyone",
+          "element": "",
           "type": "status"
         },
         {
           "name": "bite",
-          "atk": 5,
+          "dmg": 5,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type":"atk"
         },
         {
           "name": "smog",
-          "effect": "BLIND",
+          "dmg": "blind",
           "target": "everyone",
+          "element": "",
           "type": "status"
         }
       ],
@@ -67,24 +73,30 @@
       "attacks": [
         {
           "name": "cry",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "touch",
-          "atk": 2,
+          "dmg": 2,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "look sad",
-          "type": "none"
+          "dmg": 0,
+          "target": "single",
+          "element": "",
+          "type": "status"
         },
         {
           "name": "wail",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "everyone",
+          "element": "",
           "type": "status"
         }
       ],
@@ -105,33 +117,38 @@
       "attacks": [
         {
           "name": "smog",
-          "effect": "BLIND",
+          "dmg": "blind",
           "target": "everyone",
+          "element": "",
           "type": "status"
         },
         {
           "name": "spore",
-          "atk": 3,
+          "dmg": 3,
           "target": "everyone",
-          "type": "poison"
+          "element": "poison",
+          "type": "spatk"
         },
         {
           "name": "whip",
-          "atk": 4,
+          "dmg": 4,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "dominate",
-          "effect": "CONFUSE",
+          "dmg": "confuse",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "quake",
-          "atk": 2,
+          "dmg": 2,
           "target": "everyone",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         }
       ],
       "weakness": [ "fire" ],
@@ -151,21 +168,24 @@
       "attacks": [
         {
           "name": "vicegrip",
-          "atk": 4,
+          "dmg": 4,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "quake",
-          "atk": 2,
+          "dmg": 2,
           "target": "everyone",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "throw rock",
-          "atk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "melee"
+          "element": "ranged",
+          "type": "atk"
         }
       ],
       "weakness": [ "none" ],
@@ -185,21 +205,24 @@
       "attacks": [
         {
           "name": "vicegrip",
-          "atk": 4,
+          "dmg": 4,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "quake",
-          "atk": 2,
+          "dmg": 2,
           "target": "everyone",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "throw rock",
-          "atk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "melee"
+          "element": "ranged",
+          "type": "atk"
         }
       ],
       "weakness": [ "fire" ],
@@ -219,21 +242,24 @@
       "attacks": [
         {
           "name": "vicegrip",
-          "atk": 4,
+          "dmg": 4,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "quake",
-          "atk": 2,
+          "dmg": 2,
           "target": "everyone",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "throw rock",
-          "atk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "melee"
+          "element": "ranged",
+          "type": "atk"
         }
       ],
       "weakness": [ "ice" ],
@@ -253,27 +279,31 @@
       "attacks": [
         {
           "name": "sing",
-          "effect": "CONFUSE",
+          "dmg": "confuse",
           "target": "everyone",
+          "element": "",
           "type": "status"
         },
         {
           "name": "slap",
-          "atk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "water splash",
-          "atk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type": "spatk"
         },
         {
           "name": "drown",
-          "atk": 8,
+          "dmg": 8,
           "target": "everyone",
-          "type": "ice"
+          "element": "ice",
+          "type": "spatk"
         }
       ],
       "weakness": [ "thunder" ],
@@ -293,45 +323,45 @@
       "attacks": [
         {
           "name": "smog",
-          "effect": "BLIND",
+          "dmg": "blind",
           "target": "everyone",
+          "element": "",
           "type": "status"
         },
         {
           "name": "dominate",
-          "effect": "CONFUSE",
+          "dmg": "confuse",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "spikes",
-          "atk": 10,
+          "dmg": 10,
           "target": "everyone",
-          "type": "ranged"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "thorn",
-          "atk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "ranged"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "scratch",
-          "atk": 2,
+          "dmg": 2,
           "target": "single",
-          "type": "ranged"
-        },
-        {
-          "name": "laugh",
-          "effect": "POISON",
-          "target": "everyone",
-          "type": "status"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "thunderpunch",
-          "atk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         }
       ],
       "weakness": [ "none" ],
@@ -353,80 +383,86 @@
       "attacks": [
         {
           "name": "ember",
-          "spatk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "fire"
+          "element": "fire",
+          "type": "spatk"
         },
         {
           "name": "lightning",
-          "spatk": 2,
+          "dmg": 2,
           "target": "single",
-          "type": "thunder"
+          "element": "thunder",
+          "type": "spatk"
         },
         {
           "name": "snowball",
-          "atk": 2,
+          "dmg": 2,
           "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type": "atk"
         },
         {
           "name": "icy wind",
-          "spatk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type": "spatk"
         },
         {
           "name": "fireball",
-          "spatk": 10,
+          "dmg": 10,
           "target": "everyone",
-          "type": "fire"
+          "element": "fire",
+          "type": "spatk"
         },
         {
           "name": "avalanche",
-          "spatk": 8,
+          "dmg": 8,
           "target": "everyone",
-          "type": "ice"
+          "element": "ice",
+          "type": "atk"
         },
         {
           "name": "zap",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "miasma",
-          "spatk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "poison"
+          "element": "poison",
+          "type": "spatk"
         },
         {
           "name": "firewall",
-          "spatk": 4,
+          "dmg": 4,
           "target": "everyone",
-          "type": "fire"
+          "element": "fire",
+          "type": "spatk"
         },
         {
           "name": "thunderpunch",
-          "atk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "thunder"
+          "element": "thunder",
+          "type": "spatk"
         },
         {
           "name": "thoron",
-          "spatk": 7,
+          "dmg": 7,
           "target": "single",
-          "type": "thunder"
-        },
-        {
-          "name": "poison touch",
-          "effect": "POISON",
-          "target": "single",
-          "type": "status"
+          "element": "thunder",
+          "type": "spatk"
         },
         {
           "name": "heal",
-          "hp": 10,
+          "dmg": 10,
           "target": "single",
+          "element": "",
           "type": "heal"
         }
       ],
@@ -443,70 +479,73 @@
       "attacks": [
         {
           "name": "heal",
-          "hp": 10,
+          "dmg": 10,
           "target": "single",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "lightning",
-          "spatk": 2,
+          "dmg": 2,
           "target": "single",
-          "type": "thunder"
+          "element": "thunder",
+          "type": "spatk"
         },
         {
           "name": "snowball",
-          "atk": 2,
+          "dmg": 2,
           "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type:": "atk"
         },
         {
           "name": "icy wind",
-          "spatk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "ice"
-        },
-        {
-          "name": "restore",
-          "effect": "RESTORE",
-          "target": "single",
-          "type": "status"
+          "element": "ice",
+          "type": "spatk"
         },
         {
           "name": "heal pulse",
-          "hp": 5,
+          "dmg": 5,
           "target": "everyone",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "heal blast",
-          "hp": 15,
+          "dmg": 15,
           "target": "single",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "healing bell",
-          "hp": 3,
+          "dmg": 3,
           "target": "everyone",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "ultimate health",
-          "hp": 99,
+          "dmg": 99,
           "target": "everyone",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "bandaid",
-          "hp": 2,
+          "dmg": 2,
           "target": "single",
+          "element": "",
           "type": "heal"
         }
       ],
       "hp_pool": [ 6, 7, 8, 9, 10, 11, 12 ],
       "atk_pool": [ 1, 2 ],
       "def_pool": [ 1, 2 ],
-      "spatk_pool": [ 3, 4, 5, 6 ],
-      "spdef_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
+      "dmg_pool": [ 3, 4, 5, 6 ],
+      "spatk_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
       "weakness": [ "", "thunder", "poison", "malee", "ranged" ]
     },
     "BARBARIAN": {
@@ -515,39 +554,45 @@
       "attacks": [
         {
           "name": "slap",
-          "atk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "punch",
-          "atk": 4,
+          "dmg": 4,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "kick",
-          "atk": 5,
+          "dmg": 5,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "throw",
-          "atk": 5,
+          "dmg": 5,
           "target": "single",
-          "type": "ranged"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "scream",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "body slam",
-          "atk": 10,
+          "dmg": 10,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         }
       ],
       "hp_pool": [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ],
@@ -563,32 +608,37 @@
       "attacks": [
         {
           "name": "slap",
-          "atk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "punch",
-          "atk": 4,
+          "dmg": 4,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "shoot bow",
-          "atk": 2,
+          "dmg": 2,
           "target": "single",
-          "type": "ranged"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "bow storm",
-          "atk": 10,
+          "dmg": 10,
           "target": "everyone",
-          "type": "ranged"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "disarm",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "single",
+          "element": "",
           "type": "status"
         }
       ],
@@ -605,57 +655,66 @@
       "attacks": [
         {
           "name": "charm",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "vicious mockery",
-          "spatk": 17,
+          "dmg": 17,
           "target": "single",
-          "type": "poison"
+          "element": "poison",
+          "type": "spatk"
         },
         {
           "name": "bard dance",
-          "effect": "LURE",
+          "dmg": "lure",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "slap",
-          "atk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "heal",
-          "hp": 10,
+          "dmg": 10,
           "target": "single",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "double slap",
-          "atk": 2,
+          "dmg": 2,
           "target": "two",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "icy wind",
-          "spatk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type": "spatk"
         },
         {
           "name": "ember",
-          "spatk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "fire"
+          "element": "fire",
+          "type": "spatk"
         },
         {
           "name": "snowball",
-          "atk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type": "spatk"
         }
       ],
       "hp_pool": [ 4, 5, 6, 7, 8, 9, 10, 11 ],
@@ -671,207 +730,213 @@
       "attacks": [
         {
           "name": "charm",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "bard dance",
-          "effect": "LURE",
+          "dmg": "lure",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "slap",
-          "atk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "heal",
-          "hp": 10,
+          "dmg": 10,
           "target": "single",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "double slap",
-          "atk": 2,
+          "dmg": 2,
           "target": "two",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "icy wind",
-          "spatk": 1,
+          "dmg": 3,
           "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type": "spatk"
         },
         {
           "name": "ember",
-          "spatk": 1,
+          "dmg": 1,
           "target": "single",
-          "type": "fire"
+          "element": "fire",
+          "type": "spatk"
         },
         {
           "name": "snowball",
-          "atk": 1,
+          "dmg": 2,
           "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type": "atk"
         },
         {
           "name": "punch",
-          "atk": 4,
+          "dmg": 4,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "kick",
-          "atk": 5,
+          "dmg": 5,
           "target": "single",
-          "type": "melee"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "throw",
-          "atk": 5,
+          "dmg": 5,
           "target": "single",
-          "type": "ranged"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "scream",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "body slam",
-          "atk": 10,
+          "dmg": 10,
           "target": "single",
-          "type": "melee"
-        },
-        {
-          "name": "ember",
-          "spatk": 1,
-          "target": "single",
-          "type": "fire"
+          "element": "melee",
+          "type": "atk"
         },
         {
           "name": "lightning",
-          "spatk": 1,
+          "dmg": 2,
           "target": "single",
-          "type": "thunder"
+          "element": "thunder",
+          "type": "spatk"
         },
         {
           "name": "snowball",
-          "atk": 1,
+          "dmg": 2,
           "target": "single",
-          "type": "ice"
-        },
-        {
-          "name": "icy wind",
-          "spatk": 1,
-          "target": "single",
-          "type": "ice"
+          "element": "ice",
+          "type": "atk"
         },
         {
           "name": "fireball",
-          "spatk": 10,
+          "dmg": 10,
           "target": "everyone",
-          "type": "fire"
+          "element": "fire",
+          "type": "spatk"
         },
         {
           "name": "avalanche",
-          "spatk": 8,
+          "dmg": 8,
           "target": "everyone",
-          "type": "ice"
+          "element": "ice",
+          "type": "atk"
         },
         {
           "name": "zap",
-          "effect": "NUMB",
+          "dmg": "numb",
           "target": "single",
+          "element": "",
           "type": "status"
         },
         {
           "name": "miasma",
-          "spatk": 3,
+          "dmg": 3,
           "target": "single",
-          "type": "poison"
+          "element": "poison",
+          "type": "spatk"
         },
         {
           "name": "firewall",
-          "spatk": 5,
+          "dmg": 5,
           "target": "everyone",
-          "type": "fire"
+          "element": "fire",
+          "type": "spatk"
         },
         {
           "name": "thunderpunch",
-          "atk": 5,
+          "dmg": 5,
           "target": "single",
-          "type": "thunder"
+          "element": "thunder",
+          "type": "atk"
         },
         {
           "name": "thoron",
-          "spatk": 7,
+          "dmg": 7,
           "target": "single",
-          "type": "thunder"
+          "element": "thunder",
+          "type": "spatk"
         },
         {
           "name": "poison touch",
-          "effect": "POISON",
+          "dmg": "POISON",
           "target": "single",
-          "type": "status"
+          "element": "status",
+          "type": "spatk"
         },
         {
           "name": "shoot bow",
-          "atk": 2,
+          "dmg": 2,
           "target": "single",
-          "type": "ranged"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "bow storm",
-          "atk": 10,
+          "dmg": 10,
           "target": "everyone",
-          "type": "ranged"
-        },
-        {
-          "name": "disarm",
-          "effect": "NUMB",
-          "target": "single",
-          "type": "status"
+          "element": "ranged",
+          "type": "atk"
         },
         {
           "name": "heal pulse",
-          "hp": 5,
+          "dmg": 5,
           "target": "everyone",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "heal blast",
-          "hp": 15,
+          "dmg": 15,
           "target": "single",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "healing bell",
-          "hp": 3,
+          "dmg": 3,
           "target": "everyone",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "ultimate health",
-          "hp": 99,
+          "dmg": 99,
           "target": "everyone",
+          "element": "",
           "type": "heal"
         },
         {
           "name": "bandaid",
-          "hp": 2,
+          "dmg": 2,
           "target": "single",
+          "element": "",
           "type": "heal"
-        },
-        {
-          "name": "restore",
-          "effect": "RESTORE",
-          "target": "single",
-          "type": "status"
         }
       ],
       "hp_pool": [ 3, 4, 5, 6, 7, 8, 9 ],

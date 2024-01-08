@@ -47,6 +47,8 @@ def fetch_random_hero():
 
     return fetch_hero_entity(random_hero_data)
 
+# sets up game parameters
+
 def fetch_enemy_entity(random_data):
     weakness = random_data['weakness'][0] if 'weakness' in random_data and random_data['weakness'] else None
     strength = random_data['strength'][0] if 'strength' in random_data and random_data['strength'] else None
@@ -80,11 +82,11 @@ def fetch_random_enemy():
 
 def setupGame():
     new_enemy = fetch_random_enemy()
-    new_enemy.show_picture()
-    new_enemy.show_description()
+    #new_enemy.show_picture()
+    #new_enemy.show_description()
 
     new_hero = fetch_random_hero()
-    new_hero.show_picture()
-    new_hero.show_description()
+    #new_hero.show_picture()
+    #new_hero.show_description()
 
     return new_enemy, new_hero

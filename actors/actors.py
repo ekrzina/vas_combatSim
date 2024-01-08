@@ -1,7 +1,9 @@
+# sets up combat agents
 from abc import ABC, abstractmethod
 from PIL import Image
 import pygame
 import os
+import random
 
 class AbstractActor(ABC):
     def __init__(self, name, hp, atk, pdef, spatk, spdef, attack_list, weakness, pct):
@@ -16,12 +18,18 @@ class AbstractActor(ABC):
         self.pct = pct
     
     @abstractmethod
-    def perform_attack(self, target):
+    def add_initiative(self):
+        initiative = random.randint(1,20)
+        self.initiative = initiative
+
+    @abstractmethod
+    def perform_attack(self, target, selected_attack):
         pass
 
     @abstractmethod
     def take_damage(self, damage):
         pass
+        # check if alive
 
     @abstractmethod
     def show_picture(self):
@@ -159,8 +167,10 @@ class Enemy(AbstractActor):
         self.immune = immune
         # add behaviour
 
-    def perform_attack(self, target):
-        # Implement the logic for performing an attack on the target
+    def add_initiative(self):
+        return super().add_initiative()
+
+    def perform_attack(self, target, selected_attack):
         pass
 
     def take_damage(self, damage):
@@ -179,13 +189,15 @@ class Enemy(AbstractActor):
     def show_description(self):
         return super().show_description()
         
-
 class Hero(AbstractActor):
     def __init__(self,name, hp, atk, pdef, spatk, spdef, attack_list, weakness, pct):
         super().__init__(name, hp, atk, pdef, spatk, spdef, attack_list, weakness, pct)
         # add behaviour
 
-    def perform_attack(self, target):
+    def add_initiative(self):
+        return super().add_initiative()
+
+    def perform_attack(self, target, selected_attack):
         pass
 
     def take_damage(self, damage):
