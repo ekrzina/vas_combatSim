@@ -5,7 +5,7 @@ from spade import wait_until_finished
 import spade
 
 class DM(Agent):
-
+    self.var = "help"
     async def setup(self):
         print("The DM Enters the Game!")
         await asyncio.sleep(1)

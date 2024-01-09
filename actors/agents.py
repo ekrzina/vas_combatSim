@@ -21,7 +21,7 @@ class DM(Agent):
         # gives first player initiative
         async def on_start(self):
 
-            self.battle_duration = 0
+            self.battle_duration = 1
             self.npc_turn = 0
 
             to_whom_it_may_concern = self.agent_list[self.npc_turn].jid
@@ -59,6 +59,9 @@ class DM(Agent):
 
         async def run(self):
             # waits for player to respond
+            print("-----------------------")
+            print(f"-------TURN-{self.battle_duration}-------")
+            print("-----------------------")
             msg = await self.receive(timeout=15)
             if msg:
                 # process message body using self.process_the_body
@@ -91,7 +94,6 @@ class DM(Agent):
                         print(agent.name)
                         agent.show_picture()
                     
-                    # after game is over, kill self and all other agents
                     self.kill()
 
             else:
@@ -99,6 +101,7 @@ class DM(Agent):
         
         # sends messages to stop players one by one
         async def on_end(self):
+            print(f"Cleaning up Game...\n")
             for a in self.agent_list:
                 end_msg = Message(
                     to=a.jid,
@@ -132,14 +135,22 @@ class EnemyNPC(Agent, Enemy):
         self.initiative = enemy.initiantive
 
     async def setup(self):
-        print(f"Enemy {self.name} enters the battlefield!")
+        print(f"Enemy {self.agent.name} enters the battlefield!")
         await asyncio.sleep(1)
     
     class EnemyBehaviour(CyclicBehaviour):
         async def run(self):
-            print("aha")
+            msg = await self.receive(timeout = 60)
+            if msg:
+                ontology = msg.metadata.get("ontology")
+
+                if ontology == "initiative":
+                    print("hehe")
+                elif ontology == "gameover":
+                    self.kill()
+
         async def on_end(self):
-            print(f"Enemy {self.name} defeated!")
+            await self.agent.stop()
 
 class AllyNPC(Agent, Hero):
 
