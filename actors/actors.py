@@ -165,17 +165,9 @@ class Enemy(AbstractActor):
         super().__init__(name, hp, atk, pdef, spatk, spdef, attack_list, weakness, pct)
         self.strength = strength
         self.immune = immune
-        # add behaviour
 
     def add_initiative(self):
         return super().add_initiative()
-
-    def perform_attack(self, target, selected_attack):
-        pass
-
-    def take_damage(self, damage):
-        # Implement the logic for taking damage
-        pass
 
     def show_picture(self):
         return super().show_picture()
@@ -192,17 +184,10 @@ class Enemy(AbstractActor):
 class Hero(AbstractActor):
     def __init__(self,name, hp, atk, pdef, spatk, spdef, attack_list, weakness, pct):
         super().__init__(name, hp, atk, pdef, spatk, spdef, attack_list, weakness, pct)
-        # add behaviour
 
     def add_initiative(self):
         return super().add_initiative()
 
-    def perform_attack(self, target, selected_attack):
-        pass
-
-    def take_damage(self, damage):
-        pass
-    
     def get_stats_string(self):
         return super().get_stats_string()
 
