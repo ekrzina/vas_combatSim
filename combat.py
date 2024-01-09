@@ -3,6 +3,7 @@ from time import sleep
 from actors.agents import DM, EnemyNPC, AllyNPC
 from actors.actors import Enemy, Hero
 from spade import wait_until_finished
+import spade
 
 def print_initiatives(a):
         print(f"{a.name}'s initiative:  {a.initiative}\n")
@@ -52,4 +53,4 @@ def startCombat(actors):
     # sort list based on initiative
     agent_list = sorted(actors, key=lambda x: x.initiative, reverse=True)
     
-    let_agents_loose(agent_list)
+    spade.run(let_agents_loose(agent_list))

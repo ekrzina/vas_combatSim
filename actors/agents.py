@@ -88,14 +88,26 @@ class DM(Agent):
                     print(f"The Game has Been Decided! It lasted {self.battle_duration} turns. The victors are: \n")
                     for agent in self.agent_list:
                         print(agent.name)
+                        agent.show_picture()
+                    
+                    # after game is over, kill self and all other agents
+                    self.kill()
 
             else:
                 print(f"Player {self.agent_list[self.npc_turn].name} is not responding.")
-                    # sends messages to stop players one by one
         
-        async def on_end(self) -> None:
-            return await super().on_end()      
-
+        # sends messages to stop players one by one
+        async def on_end(self):
+            for a in self.agent_list:
+                end_msg = Message(
+                    to=a.jid,
+                    body="bye",
+                    metadata={
+                        "ontology": "gameover",
+                        "performative": "inform"
+                    } 
+                )
+                await self.send(end_msg)
 
 class EnemyNPC(Agent, Enemy):
 
