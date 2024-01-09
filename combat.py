@@ -15,9 +15,9 @@ def roll_initiative(actors):
 
 async def create_instance(attacker, i):
     if isinstance(attacker, Enemy):
-        new_player = EnemyNPC(f"player{i}@rec.foi.hr", "tajna", attacker)
+        new_player = EnemyNPC(f"player{i}@localhost", "tajna", attacker)
     elif isinstance(attacker, Hero):
-        new_player = AllyNPC(f"player{i}@rec.foi.hr", "tajna", attacker)
+        new_player = AllyNPC(f"player{i}@localhost", "tajna", attacker)
     
     # starts the new Player
     await new_player.start()
@@ -26,7 +26,7 @@ async def create_instance(attacker, i):
 # implement from agent perspective with their behaviour
 async def let_agents_loose(agent_list):
     players = []
-    i = 0
+    i = 1
 
     # kreiraj broj agenata koji su u listi agenata
     for attacker in agent_list:
@@ -39,12 +39,11 @@ async def let_agents_loose(agent_list):
     # kreiraj prvog agenta koji je DM
     # DM salje poruke agentu po redu, s inicijativom
     # ujedno salje listu igraca kako bi znali target
-    dm = DM("dm@rec.foi.hr", "tajna", players)
+    dm = DM("dungeonmaster@localhost", "tajna", players)
     await dm.start()
 
     # zavrsi igru
     await wait_until_finished(dm)
-    # dm kills all agents on end
 
 # combat goes through three main phases: initiantive roll, attacks and go to next battle if game isn't over
 def startCombat(actors):

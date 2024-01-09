@@ -3,6 +3,7 @@ from spade.behaviour import CyclicBehaviour
 from spade.message import Message
 import asyncio
 from actors.actors import Enemy, Hero
+from spade import wait_until_finished
 
 class DM(Agent):
     # na pocetku DM salje poruku s flagom iducem agentu u listi
@@ -12,16 +13,17 @@ class DM(Agent):
     
     async def setup(self):
         print("The DM Enters the Game!")
-        self.npc_turn = 0
         await asyncio.sleep(1)
-        self.battle_duration = 0
-
         ponasanje = self.DMBehaviour()
         self.add_behaviour(ponasanje)
 
     class DMBehaviour(CyclicBehaviour):
         # gives first player initiative
         async def on_start(self):
+
+            self.battle_duration = 0
+            self.npc_turn = 0
+
             to_whom_it_may_concern = self.agent_list[self.npc_turn].jid
             starting_turn_msg = Message(
                 to=to_whom_it_may_concern,
@@ -57,7 +59,7 @@ class DM(Agent):
 
         async def run(self):
             # waits for player to respond
-            msg = await self.receive(timeout=10)
+            msg = await self.receive(timeout=15)
             if msg:
                 # process message body using self.process_the_body
                 self.process_the_body(msg)
@@ -65,7 +67,6 @@ class DM(Agent):
                 # if there are more players than 1
                 # and there are both enemies and allies
                 if both == True:
-                    
                     self.npc_turn += 1
                     # check if len - 1 later
                     if self.npc_turn > len(self.agent_list) - 1:
@@ -108,7 +109,11 @@ class DM(Agent):
                     } 
                 )
                 await self.send(end_msg)
-
+                # wait until the player is finished
+                await wait_until_finished(a)
+            # at the end, end self
+            await self.agent.stop()
+            
 class EnemyNPC(Agent, Enemy):
 
     def __init__(self, jid, password, enemy):
@@ -130,9 +135,12 @@ class EnemyNPC(Agent, Enemy):
         print(f"Enemy {self.name} enters the battlefield!")
         await asyncio.sleep(1)
     
-    def change_initiative(self, ini):
-        self.initiantive = ini
-  
+    class EnemyBehaviour(CyclicBehaviour):
+        async def run(self):
+            print("aha")
+        async def on_end(self):
+            print(f"Enemy {self.name} defeated!")
+
 class AllyNPC(Agent, Hero):
 
     def __init__(self, jid, password, ally):
@@ -152,9 +160,6 @@ class AllyNPC(Agent, Hero):
         print(f"Ally {self.name} enters the battlefield!")
         await asyncio.sleep(1)
     
-    def change_initiative(self, ini):
-        self.initiantive = ini
-
 # import agent behaviour, based on class they act differently, attack from there
      #   target = choose_target(attacker, agent_list)
      #   selected_attack = choose_attack(attacker)
