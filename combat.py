@@ -1,56 +1,59 @@
 # simulates combat
 from time import sleep
+from actors.agents import DM, EnemyNPC, AllyNPC
+from actors.actors import Enemy, Hero
+from spade import wait_until_finished
 
-global game_over, turns
+def print_initiatives(a):
+        print(f"{a.name}'s initiative:  {a.initiative}\n")
 
-def print_initiatives(enemy, hero):
-        print(f"{enemy.name}'s initiative:  {enemy.initiative}\n")
-        print(f"{hero.name}'s initiative:   {hero.initiative}\n")
+def roll_initiative(actors):
+    for a in actors:
+         a.add_initiative()
+         print_initiatives(a)
 
-def roll_initiative(enemy, hero):
-    enemy.add_initiative()
-    hero.add_initiative()
-    print_initiatives(enemy, hero)
-
-def choose_target(attacker, list):
-     # check if agent is enemyor ally
-     pass
-
-def choose_attack(attacker):
-     # randomly pick attack
-     pass
+async def create_instance(attacker, i):
+    if isinstance(attacker, Enemy):
+        new_player = EnemyNPC(f"player{i}@rec.foi.hr", "tajna", attacker)
+    else:
+        new_player = AllyNPC(f"player{i}@rec.foi.hr", "tajna", attacker)
+    
+    # starts the new Player
+    await new_player.start()
+    return new_player
 
 # implement from agent perspective with their behaviour
-def let_agents_loose(agent_list):
-    global game_over, turns
+async def let_agents_loose(agent_list):
+    players = []
+    i = 0
+
+    # kreiraj broj agenata koji su u listi agenata
     for attacker in agent_list:
-        # import agent behaviour, based on class they act differently, attack from there
-        target = choose_target(attacker, agent_list)
-        selected_attack = choose_attack(attacker)
-        attacker.perform_attack(target, selected_attack)
+         # create agent with attacker behavior (for now)
+        new_player = create_instance(attacker, i)
+        i += 1
+        players.append(new_player)
 
-        sleep(0.5)
+    # svi su agenti pripremljeni i cekaju poruke
+    # kreiraj prvog agenta koji je DM
+    # DM salje poruke agentu po redu, s inicijativom
+    # ujedno salje listu igraca kako bi znali target
+    dm = DM("dm@rec.foi.hr", "tajna", players)
+    await dm.start()
 
-        if target.hp <= 0:
-            print(f"{target.name} has been defeated!")
-            game_over = True
-            print(f"Enemies defeated in {turns} turns!")
-
-        sleep(2)
+    # zavrsi igru
+    await wait_until_finished(dm)
+    # dm kills all agents on end
 
 # combat goes through three main phases: initiantive roll, attacks and go to next battle if game isn't over
-def startCombat(enemy, hero):
+def startCombat(actors):
     global turns, game_over
+
     game_over = False
     turns = 0
 
-    roll_initiative(enemy, hero)
-    agent_list = [enemy, hero]
+    roll_initiative(actors)
     # sort list based on initiative
-    agent_list = sorted(agent_list, key=lambda x: x.initiative, reverse=True)
+    agent_list = sorted(actors, key=lambda x: x.initiative, reverse=True)
     
-    while(game_over==False):
-        # start of turn
-        turns += 1
-        # all attack
-        let_agents_loose(agent_list)
+    let_agents_loose(agent_list)

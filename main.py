@@ -4,5 +4,5 @@ from setupGame import setupGame
 from combat import startCombat
 
 if __name__ == "__main__":
-    enemy, hero = setupGame()
-    startCombat(enemy, hero)
+    actors = setupGame()
+    startCombat(actors)

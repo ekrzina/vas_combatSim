@@ -89,4 +89,6 @@ def setupGame():
     #new_hero.show_picture()
     #new_hero.show_description()
 
-    return new_enemy, new_hero
+    actors = [new_enemy, new_hero]
+
+    return actors
