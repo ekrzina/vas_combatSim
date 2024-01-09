@@ -15,7 +15,7 @@ def roll_initiative(actors):
 async def create_instance(attacker, i):
     if isinstance(attacker, Enemy):
         new_player = EnemyNPC(f"player{i}@rec.foi.hr", "tajna", attacker)
-    else:
+    elif isinstance(attacker, Hero):
         new_player = AllyNPC(f"player{i}@rec.foi.hr", "tajna", attacker)
     
     # starts the new Player
@@ -47,10 +47,6 @@ async def let_agents_loose(agent_list):
 
 # combat goes through three main phases: initiantive roll, attacks and go to next battle if game isn't over
 def startCombat(actors):
-    global turns, game_over
-
-    game_over = False
-    turns = 0
 
     roll_initiative(actors)
     # sort list based on initiative
