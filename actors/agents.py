@@ -249,7 +249,7 @@ class EnemyNPC(Agent):
                         self.kill()
 
                 elif ontology == "gameover":
-                    self.agent.stop()
+                    await self.agent.stop()
 
         async def on_end(self):
             damage_message = Message(
@@ -376,7 +376,7 @@ class AllyNPC(Agent):
                         self.kill()
 
                 elif ontology == "gameover":
-                    self.agent.stop()
+                    await self.agent.stop()
 
         async def on_end(self):
             damage_message = Message(
