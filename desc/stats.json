@@ -35,25 +35,11 @@
           "type": "spatk"
         },
         {
-          "name": "roar",
-          "dmg": "numb",
-          "target": "everyone",
-          "element": "",
-          "type": "status"
-        },
-        {
           "name": "bite",
           "dmg": 5,
           "target": "single",
           "element": "melee",
           "type":"atk"
-        },
-        {
-          "name": "smog",
-          "dmg": "blind",
-          "target": "everyone",
-          "element": "",
-          "type": "status"
         }
       ],
       "weakness": [ "ranged" ],
@@ -72,13 +58,6 @@
       "pct":"../img/ghost.png",
       "attacks": [
         {
-          "name": "cry",
-          "dmg": "numb",
-          "target": "single",
-          "element": "",
-          "type": "status"
-        },
-        {
           "name": "touch",
           "dmg": 2,
           "target": "single",
@@ -89,13 +68,6 @@
           "name": "look sad",
           "dmg": 0,
           "target": "single",
-          "element": "",
-          "type": "status"
-        },
-        {
-          "name": "wail",
-          "dmg": "numb",
-          "target": "everyone",
           "element": "",
           "type": "status"
         }
@@ -116,13 +88,6 @@
       "pct":"../img/shroom.png",
       "attacks": [
         {
-          "name": "smog",
-          "dmg": "blind",
-          "target": "everyone",
-          "element": "",
-          "type": "status"
-        },
-        {
           "name": "spore",
           "dmg": 3,
           "target": "everyone",
@@ -135,13 +100,6 @@
           "target": "single",
           "element": "melee",
           "type": "atk"
-        },
-        {
-          "name": "dominate",
-          "dmg": "confuse",
-          "target": "single",
-          "element": "",
-          "type": "status"
         },
         {
           "name": "quake",
@@ -278,13 +236,6 @@
       "pct":"../img/undine.png",
       "attacks": [
         {
-          "name": "sing",
-          "dmg": "confuse",
-          "target": "everyone",
-          "element": "",
-          "type": "status"
-        },
-        {
           "name": "slap",
           "dmg": 3,
           "target": "single",
@@ -321,20 +272,6 @@
       "name":"Little Devil",
       "pct":"../img/littledevil.png",
       "attacks": [
-        {
-          "name": "smog",
-          "dmg": "blind",
-          "target": "everyone",
-          "element": "",
-          "type": "status"
-        },
-        {
-          "name": "dominate",
-          "dmg": "confuse",
-          "target": "single",
-          "element": "",
-          "type": "status"
-        },
         {
           "name": "spikes",
           "dmg": 10,
@@ -422,13 +359,6 @@
           "target": "everyone",
           "element": "ice",
           "type": "atk"
-        },
-        {
-          "name": "zap",
-          "dmg": "numb",
-          "target": "single",
-          "element": "",
-          "type": "status"
         },
         {
           "name": "miasma",
@@ -581,13 +511,6 @@
           "type": "atk"
         },
         {
-          "name": "scream",
-          "dmg": "numb",
-          "target": "single",
-          "element": "",
-          "type": "status"
-        },
-        {
           "name": "body slam",
           "dmg": 10,
           "target": "single",
@@ -633,13 +556,6 @@
           "target": "everyone",
           "element": "ranged",
           "type": "atk"
-        },
-        {
-          "name": "disarm",
-          "dmg": "numb",
-          "target": "single",
-          "element": "",
-          "type": "status"
         }
       ],
       "hp_pool": [ 8, 9, 10, 11, 12, 13, 14, 15 ],
@@ -654,25 +570,11 @@
       "pct":"../img/bard.png",
       "attacks": [
         {
-          "name": "charm",
-          "dmg": "numb",
-          "target": "single",
-          "element": "",
-          "type": "status"
-        },
-        {
           "name": "vicious mockery",
           "dmg": 17,
           "target": "single",
           "element": "poison",
           "type": "spatk"
-        },
-        {
-          "name": "bard dance",
-          "dmg": "lure",
-          "target": "single",
-          "element": "",
-          "type": "status"
         },
         {
           "name": "slap",
@@ -728,20 +630,6 @@
       "name":"Mascat",
       "pct":"../img/mascat.png",
       "attacks": [
-        {
-          "name": "charm",
-          "dmg": "numb",
-          "target": "single",
-          "element": "",
-          "type": "status"
-        },
-        {
-          "name": "bard dance",
-          "dmg": "lure",
-          "target": "single",
-          "element": "",
-          "type": "status"
-        },
         {
           "name": "slap",
           "dmg": 1,
@@ -806,13 +694,6 @@
           "type": "atk"
         },
         {
-          "name": "scream",
-          "dmg": "numb",
-          "target": "single",
-          "element": "",
-          "type": "status"
-        },
-        {
           "name": "body slam",
           "dmg": 10,
           "target": "single",
@@ -848,13 +729,6 @@
           "type": "atk"
         },
         {
-          "name": "zap",
-          "dmg": "numb",
-          "target": "single",
-          "element": "",
-          "type": "status"
-        },
-        {
           "name": "miasma",
           "dmg": 3,
           "target": "single",
@@ -880,13 +754,6 @@
           "dmg": 7,
           "target": "single",
           "element": "thunder",
-          "type": "spatk"
-        },
-        {
-          "name": "poison touch",
-          "dmg": "POISON",
-          "target": "single",
-          "element": "status",
           "type": "spatk"
         },
         {

@@ -1,0 +1,138 @@
+from spade.agent import Agent
+from spade.behaviour import CyclicBehaviour
+from spade.message import Message
+import asyncio
+from spade import wait_until_finished
+import random
+import json
+import pygame
+from PIL import Image
+import os
+
+global agent_list
+
+
+class DM(Agent):
+    def __init__(self, jid, password, agents):
+        super().__init__(jid, password)
+        global agent_list
+        agent_list = agents
+
+    async def setup(self):
+        print("The DM Enters the Game!")
+        behaviour = self.DMBehaviour()
+        self.add_behaviour(behaviour)
+
+    class DMBehaviour(CyclicBehaviour):
+        
+        async def on_start(self):
+            self.battle_duration = 1
+            self.npc_turn = 0
+
+            to_whom_it_may_concern = agent_list[self.npc_turn].jid
+
+            msg = Message(
+                to=str(to_whom_it_may_concern),
+                body="go",
+                metadata={
+                    "ontology": "initiative",
+                    "performative": "inform"
+                }
+            )
+            await self.send(msg)
+
+        async def run(self):
+            while 1:
+                msg = await self.receive(timeout=60)
+                if msg:
+                    
+                    msg = Message(
+                    to=to_who,
+                    body="DM: Go",
+                    metadata={
+                        "ontology": "initiative",
+                        "performative": "inform"
+                    }
+                    )
+                    await self.send(msg)
+
+
+        async def on_end(self):
+            # await self.agent.stop()
+            print("Ending myself...")
+
+
+class EnemyNPC(Agent):
+
+    def __init__(self, jid, password, enemy):
+        super().__init__(jid, password)
+        self.nname = enemy.name
+        self.hp = enemy.hp
+        self.atk = enemy.atk
+        self.pdef = enemy.pdef
+        self.spatk = enemy.spatk
+        self.spdef = enemy.spdef
+        self.attack_list = enemy.attack_list
+        self.weakness = enemy.weakness
+        self.pct = enemy.pct
+        self.strength = enemy.strength
+        self.immune = enemy.immune
+        self.initiative = enemy.initiative
+
+    async def setup(self):
+        print(f"{self.name} Enters the Game!")
+        await asyncio.sleep(1)
+        behaviour = self.EnemyBehaviour()
+        self.add_behaviour(behaviour)
+
+    class EnemyBehaviour(CyclicBehaviour):
+
+        async def run(self):
+            while 1:
+                msg = await self.receive(timeout=60)
+                if msg:
+                    print(msg.body)
+                    await asyncio.sleep(1)
+                    reply_msg = msg.make_reply()
+                    reply_msg.body = f"{self.agent.nname}: Hello from {self.agent.nname}"
+                    await self.send(reply_msg)
+
+        async def on_end(self):
+            await self.agent.stop()
+    
+class AllyNPC(Agent):
+
+    def __init__(self, jid, password, ally):
+        super().__init__(jid, password)
+        self.nname = ally.name
+        self.hp = ally.hp
+        self.atk = ally.atk
+        self.pdef = ally.pdef
+        self.spatk = ally.spatk
+        self.spdef = ally.spdef
+        self.attack_list = ally.attack_list
+        self.weakness = ally.weakness
+        self.pct = ally.pct
+        self.initiative = ally.initiative
+
+    async def setup(self):
+        print(f"{self.name} Enters the Game!")
+        await asyncio.sleep(1)
+        behaviour = self.AllyBehaviour()
+        self.add_behaviour(behaviour)
+
+    class AllyBehaviour(CyclicBehaviour):
+
+        async def run(self):
+            while 1:
+                msg = await self.receive(timeout=60)
+                if msg:
+                    print(msg.body)
+                    await asyncio.sleep(1)
+
+                    reply_msg = msg.make_reply()
+                    reply_msg.body = f"{self.agent.nname}: Hello from {self.agent.nname}"
+                    await self.send(reply_msg)
+
+        async def on_end(self):
+            await self.agent.stop()

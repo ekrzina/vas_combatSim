@@ -1,12 +1,11 @@
 # simulates combat
-from time import sleep
 from actors.agents import DM, EnemyNPC, AllyNPC
 from actors.actors import Enemy, Hero
 from spade import wait_until_finished
 import spade
 
 def print_initiatives(a):
-        print(f"{a.name}'s initiative:  {a.initiative}\n")
+        print(f"\n{a.name}'s initiative:  {a.initiative}")
 
 def roll_initiative(actors):
     for a in actors:
@@ -19,7 +18,6 @@ async def create_instance(attacker, i):
         new_player = EnemyNPC(f"player{i}@localhost", "tajna", attacker)
     elif isinstance(attacker, Hero):
         new_player = AllyNPC(f"player{i}@localhost", "tajna", attacker)
-        print(new_player.hp)
     # starts the new Player
     await new_player.start()
     return new_player

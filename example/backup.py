@@ -70,7 +70,21 @@ class DM(Agent):
 
     class DMBehaviour(CyclicBehaviour):
         global agent_list
+        # gives first player initiative
+        async def on_start(self):
 
+            to_whom_it_may_concern = agent_list[self.agent.npc_turn].jid
+            starting_turn_msg = Message(
+                to=str(to_whom_it_may_concern),
+                body="go",
+                metadata={
+                    "ontology": "initiative",
+                    "performative": "inform"
+                }
+            )
+            await self.send(starting_turn_msg)
+
+        # checks whether both enemies and allies are in the game
         def check_participants(self):
             has_enemy = False
             has_ally = False
@@ -86,43 +100,47 @@ class DM(Agent):
             else:
                 return False
 
-        async def on_start(self):
-            await self.start_turn()
-
-        async def start_turn(self):
-            to_whom_it_may_concern = agent_list[self.agent.npc_turn].jid
-            starting_turn_msg = Message(
-                to=str(to_whom_it_may_concern),
-                body="go",
-                metadata={
-                    "ontology": "initiative",
-                    "performative": "inform"
-                }
-            )
-            await self.send(starting_turn_msg)
-
         async def run(self):
+            # waits for player to respond
+            
             print("-----------------------")
             print(f"---------TURN-{self.agent.battle_duration}---------")
             print("-----------------------")
             msg = await self.receive(timeout=15)
             if msg:
                 both = self.check_participants()
-                if both:
+                    # if there are more players than 1
+                    # and there are both enemies and allies
+                if both == True:
                     self.agent.npc_turn += 1
+                        # check if len - 1 later
                     if self.agent.npc_turn > len(agent_list) - 1:
                         self.agent.npc_turn = 0
                         self.agent.battle_duration += 1
-                    await self.start_turn()
+                        
+                        # send message to start to next player
+                    next_player = agent_list[self.agent.npc_turn].jid
+                    turn_msg = Message(
+                        to=str(next_player),
+                        body="go",
+                        metadata={
+                            "ontology": "initiative",
+                            "performative": "inform"
+                        }
+                    )
+                    await self.send(turn_msg)
+
                 else:
                     print(f"The Game has Been Decided! It lasted {self.agent.battle_duration} turns. The victors are:")
                     for agent in agent_list:
-                        print(f"{agent.nname} with {agent.hp} left!")
-                        show_picture(agent)
+                            print(f"{agent.nname} with {agent.hp} left!")
+                            show_picture(agent)
+                            
                     self.kill()
             else:
                 print(f"Player {agent_list[self.agent.npc_turn].name} is not responding.")
-
+        
+        # sends messages to stop players one by one
         async def on_end(self):
             print(f"Cleaning up Game...\n")
             await asyncio.sleep(2)
@@ -133,13 +151,14 @@ class DM(Agent):
                     metadata={
                         "ontology": "gameover",
                         "performative": "inform"
-                    }
+                    } 
                 )
                 await self.send(end_msg)
+                # wait until the player is finished
                 await wait_until_finished(a)
+            # at the end, end self
             await self.agent.stop()
-
-
+            
 class EnemyNPC(Agent):
 
     def __init__(self, jid, password, enemy):
@@ -232,6 +251,15 @@ class EnemyNPC(Agent):
                         )
                     await self.send(end_turn_msg)
 
+                    try:
+                        ack_msg = await self.receive(timeout=60)
+                        if ack_msg and ack_msg.body == "done":
+                            print(f"Received acknowledgment from DM. Ending turn.")
+                        else:
+                            print("DM did not acknowledge. Something went wrong!")
+                    except Exception as e:
+                        print(f"Error in acknowledgment handling: {e}")
+
                     # takes damage
                 elif ontology == "damage":
                     current_hp = int(self.agent.hp)
@@ -321,6 +349,7 @@ class AllyNPC(Agent):
         async def run(self):
             msg = await self.receive(timeout = 60)
             if msg:
+                print(f"That's me, {self.agent.nname}")
                 ontology = msg.metadata.get("ontology")
 
                 if ontology == "initiative":
@@ -352,6 +381,15 @@ class AllyNPC(Agent):
                         }
                     )
                     await self.send(end_turn_msg)
+
+                    try:
+                        ack_msg = await self.receive(timeout=60)
+                        if ack_msg and ack_msg.body == "done":
+                            print(f"Received acknowledgment from DM. Ending turn.")
+                        else:
+                            print("DM did not acknowledge. Something went wrong!")
+                    except Exception as e:
+                        print(f"Error in acknowledgment handling: {e}")
 
                     # takes damage
                 elif ontology == "damage":
