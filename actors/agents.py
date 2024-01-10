@@ -2,7 +2,6 @@ from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 from spade.message import Message
 import asyncio
-from actors.actors import Enemy, Hero
 from spade import wait_until_finished
 import random
 
@@ -28,9 +27,12 @@ class DM(Agent):
             self.battle_duration = 1
             self.npc_turn = 0
 
+            ### this needs change! you can make properties...
+            print(agent_list[0].name)
+
             to_whom_it_may_concern = agent_list[self.npc_turn].jid
             starting_turn_msg = Message(
-                to=to_whom_it_may_concern,
+                to=str(to_whom_it_may_concern),
                 body="go",
                 metadata={
                     "ontology": "initiative",
@@ -76,7 +78,7 @@ class DM(Agent):
                     next_player = agent_list[self.npc_turn].jid
                     agent_data = self.setup_agent_data()
                     starting_turn_msg = Message(
-                        to=next_player,
+                        to=str(next_player),
                         body="go",
                         metadata={
                             "ontology": "initiative",
@@ -102,7 +104,7 @@ class DM(Agent):
             print(f"Cleaning up Game...\n")
             for a in agent_list:
                 end_msg = Message(
-                    to=a.jid,
+                    to=str(a.jid),
                     body="bye",
                     metadata={
                         "ontology": "gameover",
@@ -115,11 +117,11 @@ class DM(Agent):
             # at the end, end self
             await self.agent.stop()
             
-class EnemyNPC(Agent, Enemy):
+class EnemyNPC(Agent):
 
     def __init__(self, jid, password, enemy):
         super().__init__(jid, password)
-        self.name = enemy.name
+        self.nname = enemy.name
         self.hp = enemy.hp
         self.atk = enemy.atk
         self.pdef = enemy.pdef
@@ -130,10 +132,10 @@ class EnemyNPC(Agent, Enemy):
         self.pct = enemy.pct
         self.strength = enemy.strength
         self.immune = enemy.immune
-        self.initiative = enemy.initiantive
+        self.initiative = enemy.initiative
 
     async def setup(self):
-        print(f"Enemy {self.agent.name} enters the battlefield!")
+        print(f"Enemy {self.nname} enters the battlefield!")
         await asyncio.sleep(1)
         ponasanje = self.EnemyBehaviour()
         self.add_behaviour(ponasanje)
@@ -149,7 +151,7 @@ class EnemyNPC(Agent, Enemy):
             return random.choice(self.agent.attack_list)
 
         def calculate_damage(self, attack, target):
-            dmge = int(attack.data.get("dmg", 0))
+            dmge = int(attack.get("dmg"))
 
             if attack.get("type") == "spatk":
                 dmge += self.agent.spatk
@@ -183,7 +185,7 @@ class EnemyNPC(Agent, Enemy):
                     dmg = self.calculate_damage(attack, target)
                     # send message to give damage to target
                     damage_message = Message(
-                        to=target.jid,
+                        to=str(target.jid),
                         body=str(dmg),
                         metadata={
                             "ontology": "damage",
@@ -191,7 +193,7 @@ class EnemyNPC(Agent, Enemy):
                         }
                     )
                     await self.send(damage_message)
-                    print(f"{self.agent.name} used {attack} on {target.name}!")
+                    print(f"{self.agent.nname} used {attack} on {target.name}!")
                     await asyncio.sleep(1) 
 
                     # now reply to message
@@ -205,7 +207,7 @@ class EnemyNPC(Agent, Enemy):
                     current_hp = current_hp - int(msg.body)
                     if current_hp <= 0:
                         agent_list.remove(self.agent)
-                        print(f"{self.agent.name} was defeated!")
+                        print(f"{self.agent.nname} was defeated!")
                         await asyncio.sleep(1)
                         self.kill()
 
@@ -215,11 +217,11 @@ class EnemyNPC(Agent, Enemy):
         async def on_end(self):
             await self.agent.stop()
 
-class AllyNPC(Agent, Hero):
+class AllyNPC(Agent):
 
     def __init__(self, jid, password, ally):
         super().__init__(jid, password)
-        self.name = ally.name
+        self.nname = ally.name
         self.hp = ally.hp
         self.atk = ally.atk
         self.pdef = ally.pdef
@@ -228,10 +230,10 @@ class AllyNPC(Agent, Hero):
         self.attack_list = ally.attack_list
         self.weakness = ally.weakness
         self.pct = ally.pct
-        self.initiative = ally.initiantive
+        self.initiative = ally.initiative
 
     async def setup(self):
-        print(f"Ally {self.name} enters the battlefield!")
+        print(f"Ally {self.nname} enters the battlefield!")
         await asyncio.sleep(1)
         ponasanje = self.AllyBehaviour()
         self.add_behaviour(ponasanje)
@@ -247,7 +249,7 @@ class AllyNPC(Agent, Hero):
             return random.choice(self.agent.attack_list)
 
         def calculate_damage(self, attack, target):
-            dmge = int(attack.data.get("dmg", 0))
+            dmge = int(attack.get("dmg"))
 
             if attack.get("type") == "spatk":
                 dmge += self.agent.spatk
@@ -283,7 +285,7 @@ class AllyNPC(Agent, Hero):
                     dmg = self.calculate_damage(attack, target)
                     # send message to give damage to target
                     damage_message = Message(
-                        to=target.jid,
+                        to=str(target.jid),
                         body=str(dmg),
                         metadata={
                             "ontology": "damage",
@@ -291,7 +293,7 @@ class AllyNPC(Agent, Hero):
                         }
                     )
                     await self.send(damage_message)
-                    print(f"{self.agent.name} used {attack} on {target.name}!")
+                    print(f"{self.agent.nname} used {attack} on {target.name}!")
                     await asyncio.sleep(1)  
 
                     # now reply to message
@@ -305,7 +307,7 @@ class AllyNPC(Agent, Hero):
                     current_hp = current_hp - int(msg.body)
                     if current_hp <= 0:
                         agent_list.remove(self.agent)
-                        print(f"{self.agent.name} was defeated!")
+                        print(f"{self.agent.nname} was defeated!")
                         await asyncio.sleep(1)
                         self.kill()
 

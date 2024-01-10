@@ -23,15 +23,6 @@ class AbstractActor(ABC):
         self.initiative = initiative
 
     @abstractmethod
-    def perform_attack(self, target, selected_attack):
-        pass
-
-    @abstractmethod
-    def take_damage(self, damage):
-        pass
-        # check if alive
-
-    @abstractmethod
     def show_picture(self):
         if self.pct:
             try:

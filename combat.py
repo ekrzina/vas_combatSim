@@ -13,12 +13,13 @@ def roll_initiative(actors):
          a.add_initiative()
          print_initiatives(a)
 
+# pukne na kreiranju nove instance; nesto s 
 async def create_instance(attacker, i):
     if isinstance(attacker, Enemy):
         new_player = EnemyNPC(f"player{i}@localhost", "tajna", attacker)
     elif isinstance(attacker, Hero):
         new_player = AllyNPC(f"player{i}@localhost", "tajna", attacker)
-    
+        print(new_player.hp)
     # starts the new Player
     await new_player.start()
     return new_player
@@ -30,8 +31,8 @@ async def let_agents_loose(agent_list):
 
     # kreiraj broj agenata koji su u listi agenata
     for attacker in agent_list:
-         # create agent with attacker behavior (for now)
-        new_player = create_instance(attacker, i)
+        # create agent with attacker behavior (for now)
+        new_player = await create_instance(attacker, i)
         i += 1
         players.append(new_player)
 
