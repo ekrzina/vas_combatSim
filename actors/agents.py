@@ -117,7 +117,7 @@ class DM(Agent):
                 else:
                     print(f"The Game has Been Decided! It lasted {self.agent.battle_duration} turns. The victors are:")
                     for agent in agent_list:
-                        print(f"{agent.nname} with {agent.hp} left!")
+                        print(f"{agent.nname} with {agent.hp} HP left!")
                         show_picture(agent)
                     self.kill()
             else:
@@ -162,6 +162,7 @@ class EnemyNPC(Agent):
         await asyncio.sleep(2)
         ponasanje = self.EnemyBehaviour()
         self.add_behaviour(ponasanje)
+        self.combat_hp = self.hp
     
     class EnemyBehaviour(CyclicBehaviour):
         global agent_list
@@ -234,10 +235,14 @@ class EnemyNPC(Agent):
 
                     # takes damage
                 elif ontology == "damage":
-                    current_hp = int(self.agent.hp)
+                    current_hp = self.agent.combat_hp
                     damage_value, notes = json.loads(msg.body)
                     current_hp = current_hp - int(damage_value)
-                    if current_hp <= 0:
+                    if current_hp < 0:
+                        current_hp = 0
+                    print(f"HP left: {current_hp}")
+                    self.agent.combat_hp = current_hp
+                    if current_hp == 0:
                         agent_list.remove(self.agent)
                         print(f"{self.agent.nname} was defeated!")
                         await asyncio.sleep(2)
@@ -277,6 +282,8 @@ class AllyNPC(Agent):
         await asyncio.sleep(2)
         ponasanje = self.AllyBehaviour()
         self.add_behaviour(ponasanje)
+        self.combat_hp = self.hp
+
     
     class AllyBehaviour(CyclicBehaviour):
         global agent_list
@@ -355,10 +362,14 @@ class AllyNPC(Agent):
 
                     # takes damage
                 elif ontology == "damage":
-                    current_hp = int(self.agent.hp)
+                    current_hp = self.agent.combat_hp
                     damage_value, notes = json.loads(msg.body)
                     current_hp = current_hp - int(damage_value)
-                    if current_hp <= 0:
+                    if current_hp < 0:
+                        current_hp = 0
+                    print(f"HP left: {current_hp}")
+                    self.agent.combat_hp = current_hp
+                    if current_hp == 0:
                         agent_list.remove(self.agent)
                         print(f"{self.agent.nname} was defeated!")
                         await asyncio.sleep(2)
