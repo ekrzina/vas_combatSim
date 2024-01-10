@@ -546,7 +546,7 @@
       "def_pool": [ 1, 2 ],
       "dmg_pool": [ 3, 4, 5, 6 ],
       "spatk_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
-      "spdef_pool": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+      "spdef_pool": [ 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
       "weakness": [ "", "thunder", "poison", "malee", "ranged" ]
     },
     "BARBARIAN": {

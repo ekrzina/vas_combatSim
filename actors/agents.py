@@ -117,7 +117,7 @@ class DM(Agent):
                 else:
                     print(f"The Game has Been Decided! It lasted {self.agent.battle_duration} turns. The victors are:")
                     for agent in agent_list:
-                        print(f"{agent.nname} with {agent.hp} HP left!")
+                        print(f"{agent.nname} with {agent.combat_hp} HP left!")
                         show_picture(agent)
                     self.kill()
             else:
