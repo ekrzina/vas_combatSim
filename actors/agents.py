@@ -30,7 +30,7 @@ def show_picture(ago):
                 img_surface = pygame.image.fromstring(img_data, target_size, "RGBA")
                
                 font = pygame.font.Font(None, 24)
-                text_name = font.render(f"HP left: {ago.hp}", True, (0, 0, 0))                
+                text_name = font.render(f"HP left: {ago.combat_hp}", True, (0, 0, 0))                
                 text_name_rect = text_name.get_rect(center=(target_size[0] // 2, target_size[1] - 20))
 
                 clock = pygame.time.Clock()
@@ -218,7 +218,6 @@ class EnemyNPC(Agent):
                         }
                     )
 
-                    
                     await self.send(damage_message)
                     print(f"{self.agent.nname} used {attack.get('name')} on {target.nname}, dealing {dmg} HP!")
                     await asyncio.sleep(2) 
@@ -232,6 +231,8 @@ class EnemyNPC(Agent):
                             }
                         )
                     await self.send(end_turn_msg)
+                    self.combat_hp = self.agent.combat_hp
+
 
                     # takes damage
                 elif ontology == "damage":
@@ -360,6 +361,8 @@ class AllyNPC(Agent):
                     )
                     await self.send(end_turn_msg)
 
+                    self.combat_hp = self.agent.combat_hp
+                    
                     # takes damage
                 elif ontology == "damage":
                     current_hp = self.agent.combat_hp

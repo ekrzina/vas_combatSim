@@ -92,6 +92,6 @@ def setupGame():
     new_enemy2 = fetch_random_enemy()
     new_hero2 = fetch_random_hero()
 
-    actors = [new_enemy, new_hero, new_hero2]
+    actors = [new_enemy, new_hero, new_hero2, new_enemy2]
 
     return actors
