@@ -238,10 +238,9 @@ class EnemyNPC(Agent):
                 elif ontology == "damage":
                     current_hp = self.agent.combat_hp
                     damage_value, notes = json.loads(msg.body)
-                    current_hp = current_hp - int(damage_value)
+                    current_hp = current_hp - int(damage_value) 
                     if current_hp < 0:
                         current_hp = 0
-                    print(f"HP left: {current_hp}")
                     self.agent.combat_hp = current_hp
                     if current_hp == 0:
                         agent_list.remove(self.agent)
@@ -311,15 +310,18 @@ class AllyNPC(Agent):
             if(dmge >= 0):
                 my_type = attack.get("element")
 
+                damage_multiplier = 1.0
                 if target.get("weakness") == my_type:
-                    dmge *= 2
+                    damage_multiplier = 2.0
                     notes += "W"
                 elif target.get("strength") == my_type:
-                    dmge *= 0.5
+                    damage_multiplier = 0.5
                     notes += "S"
                 elif target.get("immunity") == my_type:
-                    dmge *= 0
+                    damage_multiplier = 0.0
                     notes += "I"
+
+                dmge = round(dmge * damage_multiplier)
 
             else:
                 dmge = 0
@@ -370,7 +372,6 @@ class AllyNPC(Agent):
                     current_hp = current_hp - int(damage_value)
                     if current_hp < 0:
                         current_hp = 0
-                    print(f"HP left: {current_hp}")
                     self.agent.combat_hp = current_hp
                     if current_hp == 0:
                         agent_list.remove(self.agent)
