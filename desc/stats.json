@@ -43,7 +43,7 @@
         }
       ],
       "weakness": [ "ranged" ],
-      "strength": [ "melee", "ice", "thunder" ],
+      "strength": [ "thunder" ],
       "immune": [ "fire" ],
       "attributes": {
         "HP": 60,
@@ -110,7 +110,7 @@
         }
       ],
       "weakness": [ "fire" ],
-      "strength": [],
+      "strength": [ "none" ],
       "immune": [ "poison" ],
       "attributes": {
         "HP": 12,

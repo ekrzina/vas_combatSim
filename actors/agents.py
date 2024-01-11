@@ -4,10 +4,10 @@ from spade.message import Message
 import asyncio
 from spade import wait_until_finished
 import random
-import json
 import pygame
 from PIL import Image
 import os
+from pyswip import Prolog
 
 global agent_list
 
@@ -160,23 +160,45 @@ class EnemyNPC(Agent):
     async def setup(self):
         print(f"Enemy {self.nname} enters the battlefield!")
         await asyncio.sleep(2)
+
+        # setting up knowledge base
+        self.prolog = Prolog()
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        file_name = "enemy_knowledge_base.pl"
+        file_path = os.path.join(script_dir, file_name).replace('\\', '/')
+        self.prolog.consult(file_path)
+
         ponasanje = self.EnemyBehaviour()
         self.add_behaviour(ponasanje)
         self.combat_hp = self.hp
     
     class EnemyBehaviour(CyclicBehaviour):
         global agent_list
-        
+
         def pick_target(self):
             target_candidates = [ag for ag in agent_list if isinstance(ag, AllyNPC)]
             return random.choice(target_candidates) if target_candidates else None
 
-        def pick_attack(self):
-            return random.choice(self.agent.attack_list)
+        def pick_attack(self, target):
+            try:
+                weakness_result = list(self.agent.prolog.query(f'has_weakness({target.nname}, Weakness).'))
+                if weakness_result:
+                    print(f"The enemy knows {target.nname}'s weakness!")
+                    target_weakness = weakness_result[0]["Weakness"]
+                    for attack in self.agent.attack_list:
+                        if attack.get("element") == target_weakness:
+                            chosen_attack = attack.get("name")
+                            print(f"...And it attacks {target.nname}'s weakness: {chosen_attack}!")
+                            return chosen_attack
+                        else:
+                            print("But it doesn't seem to act on the weakness.")
+                else:
+                    return random.choice(self.agent.attack_list)
+            except Exception as e:
+                print(f"Error in pick_attack: {e}")
 
         def calculate_damage(self, attack, target):
             dmge = int(attack.get("dmg"))
-            notes = ""
 
             if attack.get("type") == "spatk":
                 dmge += self.agent.spatk
@@ -188,15 +210,18 @@ class EnemyNPC(Agent):
             
             if(dmge >= 0):
                 my_type = attack.get("element")
-
+                # consult the knowledge base to see whether it has the same weakness for the ally
+                # if not, assert into it
                 if target.get("weakness") == my_type:
                     dmge *= 2
-                    notes += "W"
+                    if not list(self.agent.prolog.query(f'has_weakness({target.nname}, {my_type}).')):
+                        self.agent.prolog.assertz(f'has_weakness({target.nname}, {my_type}).')
+                        print(f"The enemy found {target}'s weakness: {my_type}!")
 
             else:
                 dmge = 0
 
-            return round(dmge), notes
+            return round(dmge)
 
         async def run(self):
             msg = await self.receive(timeout = 60)
@@ -205,13 +230,13 @@ class EnemyNPC(Agent):
 
                 if ontology == "initiative":
                     target = self.pick_target()
-                    attack = self.pick_attack()
-                    dmg, notes = self.calculate_damage(attack, target)
+                    attack = self.pick_attack(target)
+                    dmg = self.calculate_damage(attack, target)
                         
                         # send message to give damage to target
                     damage_message = Message(
                         to=str(target.jid),
-                        body=json.dumps((dmg, notes)),  # Serialize the tuple into a string
+                        body=str(dmg),  # Serialize the tuple into a string
                         metadata={
                             "ontology": "damage",
                             "performative": "inform"
@@ -233,11 +258,10 @@ class EnemyNPC(Agent):
                     await self.send(end_turn_msg)
                     self.combat_hp = self.agent.combat_hp
 
-
-                    # takes damage
+                # takes damage
                 elif ontology == "damage":
                     current_hp = self.agent.combat_hp
-                    damage_value, notes = json.loads(msg.body)
+                    damage_value = msg.body
                     current_hp = current_hp - int(damage_value) 
                     if current_hp < 0:
                         current_hp = 0
@@ -280,24 +304,43 @@ class AllyNPC(Agent):
     async def setup(self):
         print(f"Ally {self.nname} enters the battlefield!")
         await asyncio.sleep(2)
+        
+        self.prolog = Prolog()
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        file_name = "ally_knowledge_base.pl"
+        file_path = os.path.join(script_dir, file_name).replace('\\', '/')
+        self.prolog.consult(file_path)
+
         ponasanje = self.AllyBehaviour()
         self.add_behaviour(ponasanje)
         self.combat_hp = self.hp
-
     
     class AllyBehaviour(CyclicBehaviour):
         global agent_list
-        
         def pick_target(self):
             target_candidates = [ag for ag in agent_list if isinstance(ag, EnemyNPC)]
             return random.choice(target_candidates) if target_candidates else None
 
-        def pick_attack(self):
-            return random.choice(self.agent.attack_list)
+        def pick_attack(self, target):
+            try:
+                weakness_result = list(self.agent.prolog.query(f'has_weakness({target.nname}, Weakness).'))
+                if weakness_result:
+                    print(f"We know the weakness of {target.nname}!")
+                    target_weakness = weakness_result[0]["Weakness"]
+                    for attack in self.agent.attack_list:
+                        if attack.get("element") == target_weakness:
+                            chosen_attack = attack.get("name")
+                            print(f"...And I have an attack of the same element as {target.nname}'s weakness: {chosen_attack}!")
+                            return chosen_attack
+                        else:
+                            print("But I don't have an attack that could be used for this.")
+                else:
+                    return random.choice(self.agent.attack_list)
+            except Exception as e:
+                print(f"Error in pick_attack: {e}")
 
         def calculate_damage(self, attack, target):
             dmge = int(attack.get("dmg"))
-            notes = ""
 
             if attack.get("type") == "spatk":
                 dmge += self.agent.spatk
@@ -313,20 +356,23 @@ class AllyNPC(Agent):
                 damage_multiplier = 1.0
                 if target.get("weakness") == my_type:
                     damage_multiplier = 2.0
-                    notes += "W"
+                    if not list(self.agent.prolog.query(f'has_weakness({target.nname}, {my_type}).')):
+                        self.agent.prolog.assertz(f'has_weakness({target.nname}, {my_type}).')
+                        print(f"We found {target}'s weakness: {my_type}!")
+
                 elif target.get("strength") == my_type:
                     damage_multiplier = 0.5
-                    notes += "S"
+                    # assert strength
                 elif target.get("immunity") == my_type:
                     damage_multiplier = 0.0
-                    notes += "I"
+                    # assert immunity
 
                 dmge = round(dmge * damage_multiplier)
 
             else:
                 dmge = 0
 
-            return round(dmge), notes
+            return round(dmge)
 
         async def run(self):
             msg = await self.receive(timeout = 60)
@@ -335,13 +381,13 @@ class AllyNPC(Agent):
 
                 if ontology == "initiative":
                     target = self.pick_target()
-                    attack = self.pick_attack()
-                    dmg, notes = self.calculate_damage(attack, target)
+                    attack = self.pick_attack(target)
+                    dmg = self.calculate_damage(attack, target)
                         
                         # send message to give damage to target
                     damage_message = Message(
                         to=str(target.jid),
-                        body=json.dumps((dmg, notes)),  # Serialize the tuple into a string
+                        body=str(dmg),  # Serialize the tuple into a string
                         metadata={
                             "ontology": "damage",
                             "performative": "inform"
@@ -362,13 +408,12 @@ class AllyNPC(Agent):
                         }
                     )
                     await self.send(end_turn_msg)
-
                     self.combat_hp = self.agent.combat_hp
                     
                     # takes damage
                 elif ontology == "damage":
                     current_hp = self.agent.combat_hp
-                    damage_value, notes = json.loads(msg.body)
+                    damage_value= msg.body
                     current_hp = current_hp - int(damage_value)
                     if current_hp < 0:
                         current_hp = 0
