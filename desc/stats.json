@@ -10,7 +10,7 @@
   "elements": [ "fire", "thunder", "ice", "melee", "ranged", "poison" ],
   "enemies": {
     "DRAGON": {
-      "name":"Red Dragon",
+      "name":"red-dragon",
       "pct":"../img/dragon.png",
       "attacks": [
         {
@@ -54,7 +54,7 @@
       }
     },
     "GHOST": {
-      "name":"Ghostie",
+      "name":"ghostie",
       "pct":"../img/ghost.png",
       "attacks": [
         {
@@ -68,7 +68,7 @@
           "name": "look sad",
           "dmg": 0,
           "target": "single",
-          "element": "",
+          "element": "poison",
           "type": "status"
         }
       ],
@@ -84,7 +84,7 @@
       }
     },
     "SHROOM": {
-      "name":"Doom Shroom",
+      "name":"doom-shroom",
       "pct":"../img/shroom.png",
       "attacks": [
         {
@@ -121,7 +121,7 @@
       }
     },
     "ROCK-CRAB": {
-      "name":"Rock Crab",
+      "name":"rock-crab",
       "pct":"../img/rockcrab.png",
       "attacks": [
         {
@@ -158,7 +158,7 @@
       }
     },
     "ICE-CRAB": {
-      "name":"Ice Crab",
+      "name":"ice-crab",
       "pct":"../img/icecrab.png",
       "attacks": [
         {
@@ -195,7 +195,7 @@
       }
     },
     "FIRE-CRAB": {
-      "name":"Lava Crab",
+      "name":"lava-crab",
       "pct":"../img/lavacrab.png",
       "attacks": [
         {
@@ -232,7 +232,7 @@
       }
     },
     "UNDYNE": {
-      "name":"Undine",
+      "name":"undine",
       "pct":"../img/undine.png",
       "attacks": [
         {
@@ -269,7 +269,7 @@
       }
     },
     "LITTLEDEVIL": {
-      "name":"Little Devil",
+      "name":"little-devil",
       "pct":"../img/littledevil.png",
       "attacks": [
         {
@@ -315,7 +315,7 @@
   },
   "heroes": {
     "WIZARD": {
-      "name":"Wizard",
+      "name":"wizard",
       "pct":"../img/wizard.png",
       "attacks": [
         {
@@ -392,7 +392,7 @@
           "name": "heal",
           "dmg": 10,
           "target": "single",
-          "element": "",
+          "element": "None",
           "type": "heal"
         }
       ],
@@ -401,17 +401,17 @@
       "def_pool": [ 1, 2, 3 ],
       "spatk_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
       "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9 ],
-      "weakness": [ "", "poison", "malee", "ranged" ]
+      "weakness": [ "None", "poison", "malee", "ranged" ]
     },
     "CLERIC": {
-      "name":"Cleric",
+      "name":"cleric",
       "pct":"../img/cleric.png",
       "attacks": [
         {
           "name": "heal",
           "dmg": 10,
           "target": "single",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
@@ -439,35 +439,35 @@
           "name": "heal pulse",
           "dmg": 5,
           "target": "everyone",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
           "name": "heal blast",
           "dmg": 15,
           "target": "single",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
           "name": "healing bell",
           "dmg": 3,
           "target": "everyone",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
           "name": "ultimate health",
           "dmg": 99,
           "target": "everyone",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
           "name": "bandaid",
           "dmg": 2,
           "target": "single",
-          "element": "",
+          "element": "None",
           "type": "heal"
         }
       ],
@@ -477,10 +477,10 @@
       "dmg_pool": [ 3, 4, 5, 6 ],
       "spatk_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
       "spdef_pool": [ 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
-      "weakness": [ "", "thunder", "poison", "malee", "ranged" ]
+      "weakness": [ "None", "thunder", "poison", "malee", "ranged" ]
     },
     "BARBARIAN": {
-      "name":"Barbarian",
+      "name":"barbarian",
       "pct":"../img/barbarian.png",
       "attacks": [
         {
@@ -524,10 +524,10 @@
       "def_pool": [ 6, 7, 8, 9, 10, 11, 12 ],
       "spatk_pool": [ 1, 2 ],
       "spdef_pool": [ 2, 3 ],
-      "weakness": [ "", "ice", "fire", "thunder", "poison" ]
+      "weakness": [ "None", "ice", "fire", "thunder", "poison" ]
     },
     "RANGER": {
-      "name":"Ranger",
+      "name":"ranger",
       "pct":"../img/ranger.png",
       "attacks": [
         {
@@ -564,10 +564,10 @@
       "def_pool": [ 3, 4, 5, 6 ],
       "spatk_pool": [ 1, 2 ],
       "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
-      "weakness": [ "", "ice", "fire", "thunder", "malee", "ranged" ]
+      "weakness": [ "None", "ice", "fire", "thunder", "malee", "ranged" ]
     },
     "BARD": {
-      "name":"Bard",
+      "name":"bard",
       "pct":"../img/bard.png",
       "attacks": [
         {
@@ -588,7 +588,7 @@
           "name": "heal",
           "dmg": 10,
           "target": "single",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
@@ -625,10 +625,10 @@
       "def_pool": [ 2, 3, 4, 5 ],
       "spatk_pool": [ 6, 7, 8, 9 ],
       "spdef_pool": [ 4, 5, 6, 7, 8, 9, 10 ],
-      "weakness": [ "", "ice", "fire", "thunder", "poison", "malee" ]
+      "weakness": [ "None", "ice", "fire", "thunder", "poison", "malee" ]
     },
     "MASCAT": {
-      "name":"Mascat",
+      "name":"mascat",
       "pct":"../img/mascat.png",
       "attacks": [
         {
@@ -642,7 +642,7 @@
           "name": "heal",
           "dmg": 10,
           "target": "single",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
@@ -775,35 +775,35 @@
           "name": "heal pulse",
           "dmg": 5,
           "target": "everyone",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
           "name": "heal blast",
           "dmg": 15,
           "target": "single",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
           "name": "healing bell",
           "dmg": 3,
           "target": "everyone",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
           "name": "ultimate health",
           "dmg": 99,
           "target": "everyone",
-          "element": "",
+          "element": "None",
           "type": "heal"
         },
         {
           "name": "bandaid",
           "dmg": 2,
           "target": "single",
-          "element": "",
+          "element": "None",
           "type": "heal"
         }
       ],
@@ -812,7 +812,7 @@
       "def_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
       "spatk_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
       "spdef_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
-      "weakness": [ "", "ice", "fire", "thunder", "poison", "malee", "ranged" ]
+      "weakness": [ "None", "ice", "fire", "thunder", "poison", "malee", "ranged" ]
     }
   }
 }

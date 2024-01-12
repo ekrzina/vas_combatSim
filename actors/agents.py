@@ -46,7 +46,7 @@ def show_picture(ago):
                     screen.blit(text_name, text_name_rect)
 
                     pygame.display.flip()
-                    clock.tick(0)
+                    clock.tick(30)
 
                 pygame.quit()
 
@@ -105,7 +105,7 @@ class DM(Agent):
             print("-----------------------")
             print(f"---------TURN-{self.agent.battle_duration}---------")
             print("-----------------------")
-            msg = await self.receive(timeout=15)
+            msg = await self.receive(timeout=60)
             if msg:
                 both = self.check_participants()
                 if both:
@@ -165,9 +165,8 @@ class EnemyNPC(Agent):
         self.prolog = Prolog()
         script_dir = os.path.dirname(os.path.realpath(__file__))
         file_name = "enemy_knowledge_base.pl"
-        file_path = os.path.join(script_dir, file_name).replace('\\', '/')
-        self.prolog.consult(file_path)
-
+        self.file_path = os.path.join(script_dir, file_name).replace('\\', '/')
+        
         ponasanje = self.EnemyBehaviour()
         self.add_behaviour(ponasanje)
         self.combat_hp = self.hp
@@ -175,23 +174,28 @@ class EnemyNPC(Agent):
     class EnemyBehaviour(CyclicBehaviour):
         global agent_list
 
+        def write_to_file(self, statement):
+            with open(self.agent.file_path, 'a') as file:
+                file.write(statement + "\n")
+
         def pick_target(self):
             target_candidates = [ag for ag in agent_list if isinstance(ag, AllyNPC)]
             return random.choice(target_candidates) if target_candidates else None
 
         def pick_attack(self, target):
             try:
+                self.agent.prolog.consult(self.agent.file_path)
                 weakness_result = list(self.agent.prolog.query(f'has_weakness({target.nname}, Weakness).'))
+
                 if weakness_result:
                     print(f"The enemy knows {target.nname}'s weakness!")
                     target_weakness = weakness_result[0]["Weakness"]
                     for attack in self.agent.attack_list:
                         if attack.get("element") == target_weakness:
                             chosen_attack = attack.get("name")
-                            print(f"...And it attacks {target.nname}'s weakness: {chosen_attack}!")
+                            print(f"...And it attacks {target.nname}'s weakness: {chosen_attack['name']}!")
                             return chosen_attack
-                        else:
-                            print("But it doesn't seem to act on the weakness.")
+                    print("But it doesn't seem to act on the weakness.")
                 else:
                     return random.choice(self.agent.attack_list)
             except Exception as e:
@@ -207,17 +211,18 @@ class EnemyNPC(Agent):
             elif attack.get("type") == "atk":
                 dmge += self.agent.atk
                 dmge -= target.pdef
-            
+
             if(dmge >= 0):
                 my_type = attack.get("element")
+                weaknesses = target.weakness
                 # consult the knowledge base to see whether it has the same weakness for the ally
                 # if not, assert into it
-                if target.get("weakness") == my_type:
+                if weaknesses == my_type:
                     dmge *= 2
-                    if not list(self.agent.prolog.query(f'has_weakness({target.nname}, {my_type}).')):
-                        self.agent.prolog.assertz(f'has_weakness({target.nname}, {my_type}).')
-                        print(f"The enemy found {target}'s weakness: {my_type}!")
-
+                    self.agent.prolog.consult(self.agent.file_path)
+                    if not list(self.agent.prolog.query(f"has_weakness({target.nname}, {my_type}).")):
+                        print(f"The enemy found {target.nname}'s weakness: {my_type}!")
+                        self.write_to_file(f"has_weakness({target.nname}, {my_type}).")
             else:
                 dmge = 0
 
@@ -308,8 +313,7 @@ class AllyNPC(Agent):
         self.prolog = Prolog()
         script_dir = os.path.dirname(os.path.realpath(__file__))
         file_name = "ally_knowledge_base.pl"
-        file_path = os.path.join(script_dir, file_name).replace('\\', '/')
-        self.prolog.consult(file_path)
+        self.file_path = os.path.join(script_dir, file_name).replace('\\', '/')
 
         ponasanje = self.AllyBehaviour()
         self.add_behaviour(ponasanje)
@@ -317,25 +321,57 @@ class AllyNPC(Agent):
     
     class AllyBehaviour(CyclicBehaviour):
         global agent_list
+
+        def write_to_file(self, statement):
+            with open(self.agent.file_path, 'a') as file:
+                file.write(statement + "\n")
+
         def pick_target(self):
             target_candidates = [ag for ag in agent_list if isinstance(ag, EnemyNPC)]
             return random.choice(target_candidates) if target_candidates else None
 
         def pick_attack(self, target):
             try:
+                self.agent.prolog.consult(self.agent.file_path)
+                
                 weakness_result = list(self.agent.prolog.query(f'has_weakness({target.nname}, Weakness).'))
+                strength_result = list(self.agent.prolog.query(f'has_strength({target.nname}, Strength).'))
+                immune_result = list(self.agent.prolog.query(f'is_immune({target.nname}, Immunity).'))
+
                 if weakness_result:
                     print(f"We know the weakness of {target.nname}!")
                     target_weakness = weakness_result[0]["Weakness"]
-                    for attack in self.agent.attack_list:
-                        if attack.get("element") == target_weakness:
-                            chosen_attack = attack.get("name")
-                            print(f"...And I have an attack of the same element as {target.nname}'s weakness: {chosen_attack}!")
-                            return chosen_attack
-                        else:
-                            print("But I don't have an attack that could be used for this.")
-                else:
-                    return random.choice(self.agent.attack_list)
+                    matching_weakness_attacks = [attack for attack in self.agent.attack_list if attack.get("element") == target_weakness]
+
+                    if matching_weakness_attacks:
+                        chosen_attack = random.choice(matching_weakness_attacks)
+                        print(f"...And I have an attack of the same element as {target.nname}'s weakness: {chosen_attack['name']}!")
+                        return chosen_attack
+                    else:
+                        print("But I don't have an attack that could be used for this weakness.")
+                
+                elif immune_result:
+                    print(f"We know the immunity of {target.nname} ({immune_result})!")
+                    target_im = immune_result[0]["Immunity"]
+                    different_type_attacks = [attack for attack in self.agent.attack_list if attack.get("element") != target_im]
+
+                    if different_type_attacks:
+                        chosen_attack = random.choice(different_type_attacks)
+                        print(f"...So we will instead use {chosen_attack}!")
+                        return chosen_attack
+                
+                elif strength_result:
+                    print(f"We know the strength of {target.nname} ({strength_result})!")
+                    target_str = strength_result[0]["Strength"]
+                    different_type_attacks = [attack for attack in self.agent.attack_list if attack.get("element") != target_str]
+
+                    if different_type_attacks:
+                        chosen_attack = random.choice(different_type_attacks)
+                        print(f"...So we will instead use {chosen_attack}!")
+                        return chosen_attack
+                
+                return random.choice(self.agent.attack_list)
+            
             except Exception as e:
                 print(f"Error in pick_attack: {e}")
 
@@ -352,20 +388,30 @@ class AllyNPC(Agent):
             
             if(dmge >= 0):
                 my_type = attack.get("element")
+                self.agent.prolog.consult(self.agent.file_path)
 
                 damage_multiplier = 1.0
-                if target.get("weakness") == my_type:
+                weaknesses = target.weakness
+                strengths = target.strength
+                immunes = target.immune
+                
+                if my_type == weaknesses:
                     damage_multiplier = 2.0
-                    if not list(self.agent.prolog.query(f'has_weakness({target.nname}, {my_type}).')):
-                        self.agent.prolog.assertz(f'has_weakness({target.nname}, {my_type}).')
-                        print(f"We found {target}'s weakness: {my_type}!")
+                    if not list(self.agent.prolog.query(f"has_weakness({target.nname}, {my_type}).")):
+                        print(f"We found {target.nname}'s weakness: {my_type}!")
+                        self.write_to_file(f"has_weakness({target.nname}, {my_type}).")
 
-                elif target.get("strength") == my_type:
+                elif my_type == strengths:
                     damage_multiplier = 0.5
-                    # assert strength
-                elif target.get("immunity") == my_type:
+                    if not list(self.agent.prolog.query(f"has_strength({target.nname}, {my_type}).")):
+                        print(f"We found {target.nname}'s strength: {my_type}!")
+                        self.write_to_file(f"has_strength({target.nname}, {my_type}).")
+
+                elif my_type == immunes:
                     damage_multiplier = 0.0
-                    # assert immunity
+                    if not list(self.agent.prolog.query(f"is_immune({target.nname}, {my_type}).")):
+                        print(f"We found {target.nname}'s immunity: {my_type}!")
+                        self.write_to_file(f"is_immune({target.nname}, {my_type}).")
 
                 dmge = round(dmge * damage_multiplier)
 
@@ -437,5 +483,3 @@ class AllyNPC(Agent):
                             }
                         )
             await self.send(damage_message)
-
-            
