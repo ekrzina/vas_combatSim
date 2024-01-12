@@ -90,16 +90,17 @@ class DM(Agent):
             await self.start_turn()
 
         async def start_turn(self):
-            to_whom_it_may_concern = agent_list[self.agent.npc_turn].jid
-            starting_turn_msg = Message(
-                to=str(to_whom_it_may_concern),
-                body="go",
-                metadata={
-                    "ontology": "initiative",
-                    "performative": "inform"
-                }
-            )
-            await self.send(starting_turn_msg)
+            if self.agent.npc_turn < len(agent_list):
+                to_whom_it_may_concern = agent_list[self.agent.npc_turn].jid
+                starting_turn_msg = Message(
+                    to=str(to_whom_it_may_concern),
+                    body="go",
+                    metadata={
+                        "ontology": "initiative",
+                        "performative": "inform"
+                    }
+                )
+                await self.send(starting_turn_msg)
 
         async def run(self):
             print("-----------------------")
@@ -351,23 +352,23 @@ class AllyNPC(Agent):
                         print("But I don't have an attack that could be used for this weakness.")
                 
                 elif immune_result:
-                    print(f"We know the immunity of {target.nname} ({immune_result})!")
                     target_im = immune_result[0]["Immunity"]
+                    print(f"We know the immunity of {target.nname} ({target_im})!")
                     different_type_attacks = [attack for attack in self.agent.attack_list if attack.get("element") != target_im]
 
                     if different_type_attacks:
                         chosen_attack = random.choice(different_type_attacks)
-                        print(f"...So we will instead use {chosen_attack}!")
+                        print(f"...So we will instead use {chosen_attack['name']}!")
                         return chosen_attack
                 
                 elif strength_result:
-                    print(f"We know the strength of {target.nname} ({strength_result})!")
                     target_str = strength_result[0]["Strength"]
+                    print(f"We know the strength of {target.nname} ({target_str})!")
                     different_type_attacks = [attack for attack in self.agent.attack_list if attack.get("element") != target_str]
 
                     if different_type_attacks:
                         chosen_attack = random.choice(different_type_attacks)
-                        print(f"...So we will instead use {chosen_attack}!")
+                        print(f"...So we will instead use {chosen_attack['name']}!")
                         return chosen_attack
                 
                 return random.choice(self.agent.attack_list)
