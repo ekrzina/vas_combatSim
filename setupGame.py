@@ -90,13 +90,14 @@ def setupGame():
     #new_hero.show_description()
 
     new_enemy2 = fetch_random_enemy()
-    #new_enemy3 = fetch_random_enemy()
+    new_enemy3 = fetch_random_enemy()
+    #new_enemy4 = fetch_random_enemy()
 
     new_hero2 = fetch_random_hero()
 
     #new_hero3 = fetch_random_hero()
     #new_hero4 = fetch_random_hero()
 
-    actors = [new_enemy, new_enemy2, new_hero, new_hero2]
+    actors = [new_enemy, new_enemy2, new_hero, new_hero2, new_enemy3]
 
     return actors
