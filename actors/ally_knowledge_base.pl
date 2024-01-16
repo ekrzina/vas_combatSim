@@ -13,3 +13,5 @@
 has_strength(rock-crab, melee).
 has_strength(ice-crab, melee).
 is_immune(doom-shroom, poison).
+has_strength(lava-crab, melee).
+has_weakness(ice-crab, fire).

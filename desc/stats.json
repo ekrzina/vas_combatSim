@@ -401,7 +401,7 @@
       "def_pool": [ 1, 2, 3 ],
       "spatk_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
       "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9 ],
-      "weakness": [ "None", "poison", "malee", "ranged" ]
+      "weakness": "melee"
     },
     "CLERIC": {
       "name":"cleric",
@@ -477,7 +477,7 @@
       "dmg_pool": [ 3, 4, 5, 6 ],
       "spatk_pool": [ 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
       "spdef_pool": [ 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
-      "weakness": [ "None", "thunder", "poison", "malee", "ranged" ]
+      "weakness": "poison"
     },
     "BARBARIAN": {
       "name":"barbarian",
@@ -524,7 +524,7 @@
       "def_pool": [ 6, 7, 8, 9, 10, 11, 12 ],
       "spatk_pool": [ 1, 2 ],
       "spdef_pool": [ 2, 3 ],
-      "weakness": [ "None", "ice", "fire", "thunder", "poison" ]
+      "weakness": "None"
     },
     "RANGER": {
       "name":"ranger",
@@ -564,7 +564,7 @@
       "def_pool": [ 3, 4, 5, 6 ],
       "spatk_pool": [ 1, 2 ],
       "spdef_pool": [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
-      "weakness": [ "None", "ice", "fire", "thunder", "malee", "ranged" ]
+      "weakness": "ice"
     },
     "BARD": {
       "name":"bard",
@@ -625,7 +625,7 @@
       "def_pool": [ 2, 3, 4, 5 ],
       "spatk_pool": [ 6, 7, 8, 9 ],
       "spdef_pool": [ 4, 5, 6, 7, 8, 9, 10 ],
-      "weakness": [ "None", "ice", "fire", "thunder", "poison", "malee" ]
+      "weakness": "melee"
     },
     "MASCAT": {
       "name":"mascat",
@@ -812,7 +812,7 @@
       "def_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
       "spatk_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
       "spdef_pool": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
-      "weakness": [ "None", "ice", "fire", "thunder", "poison", "malee", "ranged" ]
+      "weakness": "None"
     }
   }
 }

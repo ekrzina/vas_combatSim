@@ -885,10 +885,10 @@
         },
         {
           "name": "poison touch",
-          "dmg": "POISON",
+          "dmg": "poison",
           "target": "single",
-          "element": "status",
-          "type": "spatk"
+          "element": "",
+          "type": "status"
         },
         {
           "name": "shoot bow",

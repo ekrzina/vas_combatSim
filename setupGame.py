@@ -31,7 +31,7 @@ def fetch_random_hero():
     hero_def = random.choice(random_hero_data.get('def_pool', []))
     hero_spatk = random.choice(random_hero_data.get('spatk_pool', []))
     hero_spdef = random.choice(random_hero_data.get('spdef_pool', []))
-    hero_weakness = random.choice(random_hero_data.get('weakness', []))
+    hero_weakness = random_hero_data.get('weakness')
 
     hero_attacks = random.sample(random_hero_data.get('attacks', []), 4)
 

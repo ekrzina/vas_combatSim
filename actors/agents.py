@@ -9,7 +9,7 @@ from PIL import Image
 import os
 from pyswip import Prolog
 
-global agent_list
+global agent_list        
 
 def show_picture(ago):
         if ago.pct:
@@ -90,7 +90,16 @@ class DM(Agent):
             await self.start_turn()
 
         async def start_turn(self):
+            
             if self.agent.npc_turn < len(agent_list):
+                # first print banner
+                await asyncio.sleep(2) 
+                print("-----------------------")
+                print(f"---------TURN-{self.agent.battle_duration}---------")
+                print("-----------------------")
+                await asyncio.sleep(2) 
+                
+                # now send msg
                 to_whom_it_may_concern = agent_list[self.agent.npc_turn].jid
                 starting_turn_msg = Message(
                     to=str(to_whom_it_may_concern),
@@ -103,9 +112,6 @@ class DM(Agent):
                 await self.send(starting_turn_msg)
 
         async def run(self):
-            print("-----------------------")
-            print(f"---------TURN-{self.agent.battle_duration}---------")
-            print("-----------------------")
             msg = await self.receive(timeout=60)
             if msg:
                 both = self.check_participants()
@@ -140,7 +146,6 @@ class DM(Agent):
                 await wait_until_finished(a)
             await self.agent.stop()
 
-
 class EnemyNPC(Agent):
 
     def __init__(self, jid, password, enemy):
@@ -167,7 +172,7 @@ class EnemyNPC(Agent):
         script_dir = os.path.dirname(os.path.realpath(__file__))
         file_name = "enemy_knowledge_base.pl"
         self.file_path = os.path.join(script_dir, file_name).replace('\\', '/')
-        
+
         ponasanje = self.EnemyBehaviour()
         self.add_behaviour(ponasanje)
         self.combat_hp = self.hp
@@ -186,19 +191,22 @@ class EnemyNPC(Agent):
         def pick_attack(self, target):
             try:
                 self.agent.prolog.consult(self.agent.file_path)
-                weakness_result = list(self.agent.prolog.query(f'has_weakness({target.nname}, Weakness).'))
+                weakness_result = list(self.agent.prolog.query(f'is_weak_to({target.nname}, Weakness).'))
 
                 if weakness_result:
                     print(f"The enemy knows {target.nname}'s weakness!")
                     target_weakness = weakness_result[0]["Weakness"]
-                    for attack in self.agent.attack_list:
-                        if attack.get("element") == target_weakness:
-                            chosen_attack = attack.get("name")
-                            print(f"...And it attacks {target.nname}'s weakness: {chosen_attack['name']}!")
-                            return chosen_attack
-                    print("But it doesn't seem to act on the weakness.")
-                else:
-                    return random.choice(self.agent.attack_list)
+                    matching_weakness_attacks = [attack for attack in self.agent.attack_list if attack.get("element") == target_weakness]
+
+                    if matching_weakness_attacks:
+                        chosen_attack = random.choice(matching_weakness_attacks)
+                        print(f"...And it attacks {target.nname}'s weakness: {chosen_attack['element']}!")
+                        return chosen_attack
+                    else:
+                        print("But it doesn't seem to act on the weakness.")
+                # return something, always    
+                return random.choice(self.agent.attack_list)
+            
             except Exception as e:
                 print(f"Error in pick_attack: {e}")
 
@@ -221,15 +229,39 @@ class EnemyNPC(Agent):
                 if weaknesses == my_type:
                     dmge *= 2
                     self.agent.prolog.consult(self.agent.file_path)
-                    if not list(self.agent.prolog.query(f"has_weakness({target.nname}, {my_type}).")):
+                    if not list(self.agent.prolog.query(f"is_weak_to({target.nname}, {my_type}).")):
                         print(f"The enemy found {target.nname}'s weakness: {my_type}!")
-                        self.write_to_file(f"has_weakness({target.nname}, {my_type}).")
+                        self.write_to_file(f"is_weak_to({target.nname}, {my_type}).")
             else:
                 dmge = 0
 
             return round(dmge)
 
-        async def run(self):
+        async def send_status(self, attack, target):
+            status = attack.get("dmg")
+            status_message = Message(
+                        to=str(target.jid),
+                        body=str(status),
+                        metadata={
+                            "ontology": "status",
+                            "performative": "inform"
+                        }
+                    )
+            await self.send(status_message)
+            print(f"{self.agent.nname} used {attack.get('name')} on {target.nname} (EFFECT: {status})!")
+            await asyncio.sleep(2) 
+
+            end_turn_msg = Message(
+                to="dungeonmaster@localhost",
+                body="done",
+                metadata={
+                    "ontology": "initiative",
+                    "performative": "inform"
+                }
+            )
+            await self.send(end_turn_msg)
+
+        async def run(self):            
             msg = await self.receive(timeout = 60)
             if msg:
                 ontology = msg.metadata.get("ontology")
@@ -237,32 +269,37 @@ class EnemyNPC(Agent):
                 if ontology == "initiative":
                     target = self.pick_target()
                     attack = self.pick_attack(target)
-                    dmg = self.calculate_damage(attack, target)
-                        
-                        # send message to give damage to target
-                    damage_message = Message(
-                        to=str(target.jid),
-                        body=str(dmg),  # Serialize the tuple into a string
-                        metadata={
-                            "ontology": "damage",
-                            "performative": "inform"
-                        }
-                    )
 
-                    await self.send(damage_message)
-                    print(f"{self.agent.nname} used {attack.get('name')} on {target.nname}, dealing {dmg} HP!")
-                    await asyncio.sleep(2) 
-
-                    end_turn_msg = Message(
-                            to="dungeonmaster@localhost",
-                            body="done",
+                    # for status moves
+                    if attack['type'] == "status":
+                        await self.send_status(attack, target)
+                    else:
+                        dmg = self.calculate_damage(attack, target)
+                            
+                            # send message to give damage to target
+                        damage_message = Message(
+                            to=str(target.jid),
+                            body=str(dmg),  # Serialize the tuple into a string
                             metadata={
-                                "ontology": "initiative",
+                                "ontology": "damage",
                                 "performative": "inform"
                             }
                         )
-                    await self.send(end_turn_msg)
-                    self.combat_hp = self.agent.combat_hp
+
+                        await self.send(damage_message)
+                        print(f"{self.agent.nname} used {attack.get('name')} on {target.nname}, dealing {dmg} HP!")
+                        await asyncio.sleep(3) 
+
+                        end_turn_msg = Message(
+                                to="dungeonmaster@localhost",
+                                body="done",
+                                metadata={
+                                    "ontology": "initiative",
+                                    "performative": "inform"
+                                }
+                            )
+                        await self.send(end_turn_msg)
+                        self.combat_hp = self.agent.combat_hp
 
                 # takes damage
                 elif ontology == "damage":
@@ -279,18 +316,10 @@ class EnemyNPC(Agent):
                         self.kill()
 
                 elif ontology == "gameover":
-                    await self.agent.stop()
+                    self.kill()
 
         async def on_end(self):
-            damage_message = Message(
-                            to="dungeonmaster@localhost",
-                            body="done",
-                            metadata={
-                                "ontology": "initiative",
-                                "performative": "inform"
-                            }
-                        )
-            await self.send(damage_message)     
+            await self.agent.stop()    
 
 class AllyNPC(Agent):
 
@@ -370,7 +399,7 @@ class AllyNPC(Agent):
                         chosen_attack = random.choice(different_type_attacks)
                         print(f"...So we will instead use {chosen_attack['name']}!")
                         return chosen_attack
-                
+                # if nothing is found, return a random attack
                 return random.choice(self.agent.attack_list)
             
             except Exception as e:
@@ -421,7 +450,77 @@ class AllyNPC(Agent):
 
             return round(dmge)
 
+        async def rather_heal(self, attack):
+            # mustn't be themselves!
+            target_candidates = [ag for ag in agent_list if isinstance(ag, AllyNPC) and ag != self.agent]            
+            sorted_targets = sorted(target_candidates, key=lambda ally: ally.hp)
+            if sorted_targets:
+                # gets the target that has the least HP
+                target_for_healing = sorted_targets[0]
+                dmg = attack.get("dmg")
+                damage_message = Message(
+                            to=str(target_for_healing.jid),
+                            body=str(dmg),
+                            metadata={
+                                "ontology": "heal",
+                                "performative": "inform"
+                            }
+                        )
+                # send the message, then stop the behaviour
+                await self.send(damage_message)
+                print(f"{self.agent.nname} used {attack.get('name')} on {target_for_healing.nname}, healing {dmg} HP!")
+                await asyncio.sleep(2) 
+
+                end_turn_msg = Message(
+                    to="dungeonmaster@localhost",
+                    body="done",
+                    metadata={
+                        "ontology": "initiative",
+                        "performative": "inform"
+                    }
+                )
+                await self.send(end_turn_msg)
+                self.combat_hp = self.agent.combat_hp
+
+            else:
+                print(f"No AllyNPCs found for healing. {self.agent.nname} waits this turn out.")
+                end_turn_msg = Message(
+                    to="dungeonmaster@localhost",
+                    body="done",
+                    metadata={
+                        "ontology": "initiative",
+                        "performative": "inform"
+                    }
+                )
+                await self.send(end_turn_msg)
+                self.combat_hp = self.agent.combat_hp
+
+        async def send_status(self, attack, target):
+            status = attack.get("dmg")
+            status_message = Message(
+                        to=str(target.jid),
+                        body=str(status),
+                        metadata={
+                            "ontology": "status",
+                            "performative": "inform"
+                        }
+                    )
+            await self.send(status_message)
+            print(f"{self.agent.nname} used {attack.get('name')} on {target.nname} (EFFECT: {status})!")
+            await asyncio.sleep(2) 
+
+            end_turn_msg = Message(
+                to="dungeonmaster@localhost",
+                body="done",
+                metadata={
+                    "ontology": "initiative",
+                    "performative": "inform"
+                }
+            )
+            await self.send(end_turn_msg)
+
         async def run(self):
+
             msg = await self.receive(timeout = 60)
             if msg:
                 ontology = msg.metadata.get("ontology")
@@ -429,33 +528,37 @@ class AllyNPC(Agent):
                 if ontology == "initiative":
                     target = self.pick_target()
                     attack = self.pick_attack(target)
-                    dmg = self.calculate_damage(attack, target)
-                        
-                        # send message to give damage to target
-                    damage_message = Message(
-                        to=str(target.jid),
-                        body=str(dmg),  # Serialize the tuple into a string
-                        metadata={
-                            "ontology": "damage",
-                            "performative": "inform"
-                        }
-                    )
+
+                    # for healers
+                    if attack['type'] == "heal":
+                        await self.rather_heal(attack)
+                    elif attack['type'] == "status":
+                        await self.send_status(attack, target)
+                    else:
+                        dmg = self.calculate_damage(attack, target)
+                            
+                        damage_message = Message(
+                            to=str(target.jid),
+                            body=str(dmg),
+                            metadata={
+                                "ontology": "damage",
+                                "performative": "inform"
+                            }
+                        )
 
                         # send the message, then stop the behaviour
-                    await self.send(damage_message)
-                    print(f"{self.agent.nname} used {attack.get('name')} on {target.nname}, dealing {dmg} HP!")
-                    await asyncio.sleep(2) 
-
-                    end_turn_msg = Message(
-                        to="dungeonmaster@localhost",
-                        body="done",
-                        metadata={
-                            "ontology": "initiative",
-                            "performative": "inform"
-                        }
-                    )
-                    await self.send(end_turn_msg)
-                    self.combat_hp = self.agent.combat_hp
+                        await self.send(damage_message)
+                        print(f"{self.agent.nname} used {attack.get('name')} on {target.nname}, dealing {dmg} HP!")
+                        end_turn_msg = Message(
+                            to="dungeonmaster@localhost",
+                            body="done",
+                            metadata={
+                                "ontology": "initiative",
+                                "performative": "inform"
+                            }
+                        )
+                        await self.send(end_turn_msg)
+                        self.combat_hp = self.agent.combat_hp
                     
                     # takes damage
                 elif ontology == "damage":
@@ -471,16 +574,20 @@ class AllyNPC(Agent):
                         await asyncio.sleep(2)
                         self.kill()
 
+                elif ontology == "heal":
+                    current_hp = self.agent.combat_hp
+                    heal_value= int(msg.body)
+                    max_hp = self.agent.hp
+
+                    if current_hp + heal_value > max_hp:
+                        current_hp = max_hp
+                    else:
+                        current_hp += heal_value
+
+                    self.agent.combat_hp = current_hp
+
                 elif ontology == "gameover":
-                    await self.agent.stop()
+                    self.kill()
 
         async def on_end(self):
-            damage_message = Message(
-                            to="dungeonmaster@localhost",
-                            body="done",
-                            metadata={
-                                "ontology": "initiative",
-                                "performative": "inform"
-                            }
-                        )
-            await self.send(damage_message)
+            await self.agent.stop()
