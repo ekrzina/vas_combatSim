@@ -1,0 +1,21 @@
+Aplikacija se pokreće putem main.py skripte, što se može napraviti iz terminala ili nekog kodnog editora poput VSCode. 
+
+Kako je program implementiran putem Python SPADE-a, za ispravno je izvođenje aplikacije, potreban XMPP poslužitelj koji omogućuje okruženje za agente, kao što su Ejabberd ili Prosody. Također je potrebno postaviti okruženje. U slučaju igre s 8 sudjelujućih agenata, potrebno je kreirati 9 korisnika.
+
+Prikazano je kreiranje korisnika putem terminala u Prosodyju. Svim je agentima lozinka postavljena na "tajna".
+
+sudo prosodyctl adduser dungeonmaster@localhost
+sudo prosodyctl adduser player1@localhost
+sudo prosodyctl adduser player2@localhost
+sudo prosodyctl adduser player3@localhost
+sudo prosodyctl adduser player4@localhost
+sudo prosodyctl adduser player5@localhost
+sudo prosodyctl adduser player6@localhost
+sudo prosodyctl adduser player7@localhost
+sudo prosodyctl adduser player8@localhost
+
+Nadalje, potrebno je instalirati dodatne Python module:
+
+pip install prosody, Pillow, pygame, pyswip
+
+Nakon postavljanja okruženja, aplikacija je spremna za korištenje.
