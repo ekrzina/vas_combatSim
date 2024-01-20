@@ -25,7 +25,7 @@ def fetch_random_hero():
 
     random_hero_data = data['heroes'][random_hero_name]
 
-    # Extract hero-specific attributes
+    # daje specificne aribute junaka
     hero_hp = random.choice(random_hero_data.get('hp_pool', []))
     hero_atk = random.choice(random_hero_data.get('atk_pool', []))
     hero_def = random.choice(random_hero_data.get('def_pool', []))
@@ -47,7 +47,7 @@ def fetch_random_hero():
 
     return fetch_hero_entity(random_hero_data)
 
-# sets up game parameters
+# postavlja parametre protivnika
 
 def fetch_enemy_entity(random_data):
     weakness = random_data['weakness'][0] if 'weakness' in random_data and random_data['weakness'] else None
@@ -82,22 +82,32 @@ def fetch_random_enemy():
 
 def setupGame():
     new_enemy = fetch_random_enemy()
-    #new_enemy.show_picture()
-    #new_enemy.show_description()
+    new_enemy.show_picture()
+    new_enemy.show_description()
 
     new_hero = fetch_random_hero()
-    #new_hero.show_picture()
-    #new_hero.show_description()
+    new_hero.show_picture()
+    new_hero.show_description()
 
     new_enemy2 = fetch_random_enemy()
-    new_enemy3 = fetch_random_enemy()
+    new_enemy2.show_picture()
+    new_enemy2.show_description()
+    
+    #new_enemy3 = fetch_random_enemy()
     #new_enemy4 = fetch_random_enemy()
 
     new_hero2 = fetch_random_hero()
+    new_hero2.show_picture()
+    new_hero2.show_description()
 
     #new_hero3 = fetch_random_hero()
-    #new_hero4 = fetch_random_hero()
+    #new_hero3.show_picture()
+    #new_hero3.show_description()
 
-    actors = [new_enemy, new_enemy2, new_hero, new_hero2, new_enemy3]
+    #new_hero4 = fetch_random_hero()
+    #new_hero4.show_picture()
+    #new_hero4.show_description()
+
+    actors = [new_hero, new_hero2, new_enemy2, new_enemy]
 
     return actors

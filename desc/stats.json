@@ -70,6 +70,13 @@
           "target": "single",
           "element": "poison",
           "type": "status"
+        },
+        {
+          "name": "drown",
+          "dmg": 8,
+          "target": "everyone",
+          "element": "ice",
+          "type": "spatk"
         }
       ],
       "weakness": [ "none" ],

@@ -279,7 +279,7 @@ class EnemyNPC(Agent):
                             # send message to give damage to target
                         damage_message = Message(
                             to=str(target.jid),
-                            body=str(dmg),  # Serialize the tuple into a string
+                            body=str(dmg),
                             metadata={
                                 "ontology": "damage",
                                 "performative": "inform"
